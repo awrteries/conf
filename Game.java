@@ -62,13 +62,16 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	
 
 		player.drawEntity(g2d);
-		System.out.println(player.getX());
-		
-		
+		player.moveEntity();
+	
+
 	
 		twoDgraph.drawImage(back, null, 0, 0);
 
 	}
+
+	// methods
+	
 
 	
 
@@ -91,8 +94,30 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 		key= e.getKeyCode();
 		System.out.println(key);
-		
-		
+
+
+
+		// player movement
+		if (key == 68){ // D
+			player.setDx(1);
+			player.setW(51);
+			player.setSprite(player.getWalkR());
+			
+		} 
+		else if (key == 65){ // A
+			player.setDx(-1);
+			player.setW(51);
+			player.setSprite(player.getWalkL());
+			
+		}
+		else if (key == 87) { // W
+			player.setDy(-1);
+			player.setSprite(player.getWalkU());
+		}
+		else if (key == 83){ // S
+			player.setDy(1);
+			player.setSprite(player.getWalkD());
+		}
 		
 	
 	}
@@ -102,6 +127,24 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	@Override
 	public void keyReleased(KeyEvent e) {
 		
+		// player movement
+		if (key == 68){ // D
+			player.setDx(0);
+			player.setW(59);
+			player.setSprite(player.getIdleR());
+			
+		} 
+		else if (key == 65){ // A
+			player.setDx(0);
+			player.setW(59);
+			player.setSprite(player.getIdleL());
+			
+		}
+		else if (key == 87 || key == 83) { // W, S
+			player.setDy(0);
+			player.setSprite(player.getIdleL());
+
+		}
 		
 		
 		
