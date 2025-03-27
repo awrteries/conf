@@ -9,11 +9,14 @@ public class Entities {
     
     
         private int x, y, dx, dy, w, h;
-        private String sprite, idleL, idleR, walkD, walkU, walkL, walkR;
+        private String name, sprite, idleL, idleR, walkD, walkU, walkL, walkR;
     
         // constructors
     
         public Entities(){
+            
+            name = "";
+            
             x = 0;
             y = 0;
             dx = 0;
@@ -31,9 +34,11 @@ public class Entities {
 
         }
 
-        public Entities(int x1, int y1, int dx1, int dy1, int width, int height,
+        public Entities(String n, int x1, int y1, int dx1, int dy1, int width, int height,
         String s, String iL, String iR, String wD, String wU, String wL, String wR){
-        
+            
+            name = n;
+            
             x = x1;
             y = y1;
             dx = dx1;
@@ -51,6 +56,14 @@ public class Entities {
         }
 
         // methods
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public void drawEntity(Graphics g2d){ // draws the sprite
 

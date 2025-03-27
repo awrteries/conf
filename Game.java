@@ -14,7 +14,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private int key, x, y; 
 	private Player player;
 	private Fern fern;
-	private ArrayList <Entities> NPCS;
+	private ArrayList <Entities> NPCS, active;
+	private Dialogue testDialogue;
 
 
 
@@ -30,7 +31,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		player = new Player(400, 400);
 		fern = new Fern(600,600);
 		NPCS = setNPCS();
-		
+		active = setActive();
+		testDialogue = new Dialogue("just testing to see if it works", "assets/dialogue/testDialogue", true);
 	
 	}
 
@@ -39,6 +41,13 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public ArrayList<Entities> setNPCS(){
 		ArrayList<Entities> temp = new ArrayList<Entities>();
 		temp.add(fern);
+		return temp;
+	}
+
+	public ArrayList<Entities> setActive(){
+		ArrayList<Entities> temp = new ArrayList<Entities>();
+		temp.add(fern);
+		temp.add(player);
 		return temp;
 	}
 	
@@ -75,6 +84,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	
 
 		drawSprites(g2d);
+		testDialogue.runDialogue(active);
+		// System.out.println(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue());
 	
 
 	
@@ -167,6 +178,12 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			player.setDy(0);
 			player.setW(56);
 			player.setSprite(player.getIdleL());
+
+		}
+
+		if (key == 32){ // [SPACE]
+			testDialogue.setMoveon(true);
+			System.out.println(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue());
 
 		}
 		
