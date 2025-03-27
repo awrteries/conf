@@ -4,11 +4,11 @@ public class Player extends Entities {
         super();
     }
 
-    public Player(int x, int y, int dx, int dy, int w, int h){
-        super(400, 400, 0, 0, 59, 100);
+    public Player(int x, int y){
+        super(x, y, 0, 0, 59, 100, 
+        " ", "assets/baseidlel.gif", "assets/baseidler.gif", "assets/basewalkd.gif", "assets/basewalku.gif", "assets/basewalkl.gif", "assets/basewalkr.gif"
+        );
+        super.setSprite(getIdleL());
     }
 
-    public Player(String s, String iL, String iR, String wD, String wU, String wL, String wR){
-        super(iL, "baseidleL.gif", "baseidleR.gif", "basewalkD.gif", "basewalkU.gif", "basewalkL.gif", "basewalkR.gif");
-    }
 }

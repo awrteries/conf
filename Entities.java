@@ -31,7 +31,8 @@ public class Entities {
 
         }
 
-        public Entities(int x1, int y1, int dx1, int dy1, int width, int height){
+        public Entities(int x1, int y1, int dx1, int dy1, int width, int height,
+        String s, String iL, String iR, String wD, String wU, String wL, String wR){
         
             x = x1;
             y = y1;
@@ -39,10 +40,7 @@ public class Entities {
             dy = dy1;
             w = width;
             h = height;
-        }
 
-        public Entities(String s, String iL, String iR, String wD, String wU, String wL, String wR){
-           
             sprite = s;
             idleL = iL;
             idleR = iR;
@@ -52,12 +50,11 @@ public class Entities {
             walkR = wR;
         }
 
-
         // methods
 
         public void drawEntity(Graphics g2d){ // draws the sprite
 
-            g2d.drawImage(new ImageIcon(sprite).getImage(), x, y, w, h, null);
+            g2d.drawImage(new ImageIcon(sprite).getImage(), x, y, w*2, h*2, null);
         }
 
         public void moveEntity(){ // movement of the sprite
@@ -162,6 +159,14 @@ public class Entities {
 
         public void setWalkR(String walkR) {
             this.walkR = walkR;
+        }
+
+        public String getSprite() {
+            return sprite;
+        }
+
+        public void setSprite(String sprite) {
+            this.sprite = sprite;
         }
 
 

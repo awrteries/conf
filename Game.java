@@ -23,7 +23,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		key =-1; 
 		x=0;
 		y=0;
-		player = new Player();
+		player = new Player(400, 400);
 		
 	
 	}
@@ -60,11 +60,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	
 		g2d.clearRect(0,0,getSize().width, getSize().height);
 	
-		g2d.setFont( new Font("Broadway", Font.BOLD, 50));
-		
-		g2d.drawString("Hello!" , x, y);
 
 		player.drawEntity(g2d);
+		System.out.println(player.getX());
 		
 		
 	
