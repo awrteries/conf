@@ -1,7 +1,9 @@
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage; 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import javax.swing.*; 
 
 
@@ -11,6 +13,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private BufferedImage back; 
 	private int key, x, y; 
 	private Player player;
+	private Fern fern;
+	private ArrayList <Entities> NPCS;
 
 
 
@@ -24,10 +28,19 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		x=0;
 		y=0;
 		player = new Player(400, 400);
+		fern = new Fern(600,600);
+		NPCS = setNPCS();
 		
 	
 	}
 
+	// setting arraylists
+
+	public ArrayList<Entities> setNPCS(){
+		ArrayList<Entities> temp = new ArrayList<Entities>();
+		temp.add(fern);
+		return temp;
+	}
 	
 	
 	public void run()
@@ -61,8 +74,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		g2d.clearRect(0,0,getSize().width, getSize().height);
 	
 
-		player.drawEntity(g2d);
-		player.moveEntity();
+		drawSprites(g2d);
 	
 
 	
@@ -71,6 +83,16 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	}
 
 	// methods
+
+	public void drawSprites(Graphics g2d){
+		player.drawEntity(g2d);
+		player.Move();
+
+		for (int i = 0; i < NPCS.size(); i++) {
+			Entities npc = NPCS.get(i);
+			npc.drawEntity(g2d);
+		}
+	}
 	
 
 	
@@ -99,23 +121,23 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 		// player movement
 		if (key == 68){ // D
-			player.setDx(1);
+			player.setDx(2);
 			player.setW(51);
 			player.setSprite(player.getWalkR());
 			
 		} 
 		else if (key == 65){ // A
-			player.setDx(-1);
+			player.setDx(-2);
 			player.setW(51);
 			player.setSprite(player.getWalkL());
 			
 		}
 		else if (key == 87) { // W
-			player.setDy(-1);
+			player.setDy(-2);
 			player.setSprite(player.getWalkU());
 		}
 		else if (key == 83){ // S
-			player.setDy(1);
+			player.setDy(2);
 			player.setSprite(player.getWalkD());
 		}
 		
@@ -133,6 +155,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			player.setW(59);
 			player.setSprite(player.getIdleR());
 			
+
 		} 
 		else if (key == 65){ // A
 			player.setDx(0);
@@ -142,6 +165,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		}
 		else if (key == 87 || key == 83) { // W, S
 			player.setDy(0);
+			player.setW(56);
 			player.setSprite(player.getIdleL());
 
 		}
@@ -197,7 +221,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
-		System.out.println("you clicked at"+ arg0.getY());
+		System.out.println("you clicked at x: "+ arg0.getX() + ", y: " + arg0.getY());
 		x=arg0.getX();
 		y=arg0.getY();
 		
