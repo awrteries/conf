@@ -84,8 +84,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	
 
 		drawSprites(g2d);
+		// System.out.println(testDialogue.getDialogueList());
 		testDialogue.runDialogue(active);
-		// System.out.println(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue());
+		System.out.println(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue());
 	
 
 	
@@ -133,22 +134,28 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		// player movement
 		if (key == 68){ // D
 			player.setDx(2);
+			player.setDy(0);
 			player.setW(51);
 			player.setSprite(player.getWalkR());
 			
 		} 
 		else if (key == 65){ // A
 			player.setDx(-2);
+			player.setDy(0);
 			player.setW(51);
 			player.setSprite(player.getWalkL());
 			
 		}
 		else if (key == 87) { // W
 			player.setDy(-2);
+			player.setDx(0);
+			player.setW(56);
 			player.setSprite(player.getWalkU());
 		}
 		else if (key == 83){ // S
 			player.setDy(2);
+			player.setDx(0);
+			player.setW(56);
 			player.setSprite(player.getWalkD());
 		}
 		
@@ -176,15 +183,14 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		}
 		else if (key == 87 || key == 83) { // W, S
 			player.setDy(0);
-			player.setW(56);
+			player.setW(59);
 			player.setSprite(player.getIdleL());
 
 		}
 
 		if (key == 32){ // [SPACE]
-			testDialogue.setMoveon(true);
-			System.out.println(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue());
-
+		testDialogue.getDialogueList().remove(0);
+        System.out.println(testDialogue.getSpeaker().getName() + ": " + testDialogue.getcDialogue());
 		}
 		
 		

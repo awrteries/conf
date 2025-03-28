@@ -10,6 +10,7 @@ public class Dialogue {
     private String dialogueFile, dialogueDesc, cDialogue, removeSubStr;
     private Entities speaker;
     private Boolean moveon;
+    private ArrayList<String> dialogueList;
 
     public Dialogue(){
         dialogueFile = "";
@@ -22,6 +23,8 @@ public class Dialogue {
     public Dialogue (String dd, String df, boolean mo){
         dialogueDesc = dd;
         dialogueFile = df;
+        dialogueList = setDialogue();
+
 
         moveon = mo;
 
@@ -29,7 +32,28 @@ public class Dialogue {
 
     // methods
 
-    public void runDialogue(ArrayList<Entities> characters){
+    public void runDialogue(ArrayList<Entities> entities){
+
+        if (dialogueList == null){
+            dialogueList.add(" ");
+        } else {
+            for (int i = 0; i < entities.size(); i++) {
+                Entities entity = entities.get(i);
+                String ba = dialogueList.get(0);
+
+                if (ba.startsWith(entity.getName())){ // if the dialogue starts with a character's name the program will set the current speaker to that character
+                    speaker = entity;
+                    removeSubStr = entity.getName();
+                }
+
+                cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue  
+        }
+        }        
+                   
+    }
+
+    public ArrayList<String> setDialogue(){
+        ArrayList<String> temp = new ArrayList<String>();
         
         // try {
         File file = new File (dialogueFile);
@@ -38,40 +62,21 @@ public class Dialogue {
             scan = new Scanner(file);
 
             while(scan.hasNextLine()){
-                if (moveon){ // moveon will depend on a keypress in main, this makes it so that the dialogue doesn't progess without the player
-    
-                    String ba = scan.nextLine();
 
-                    boolean characterFound = false; 
-                    
-                    for (int i = 0; i < characters.size(); i++) {
-                        Entities character = characters.get(i);
-    
-                        if (ba.startsWith(character.getName())){ // if the dialogue starts with a character's name the program will set the current speaker to that character
-                            speaker = character;
-                            removeSubStr = character.getName();
-                        }
-    
-                        cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue
-                        moveon = false;
-                    }
-                    
-                } 
-                else if (!moveon){
-                    break; // stops my dumbass program from crashing
-                }
+                
+                String ba = scan.nextLine();
+                temp.add(ba);
+
+                
+                
+               
             }
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-         
-
-        
-        //    } catch (FileNotFoundException e) {
-        //   e.printStackTrace();
-        //   }
-   
+ 
+        return temp;
     }
 
     // getters and setters
@@ -114,6 +119,14 @@ public class Dialogue {
 
     public void setMoveon(Boolean moveon) {
         this.moveon = moveon;
+    }
+
+    public ArrayList<String> getDialogueList() {
+        return dialogueList;
+    }
+
+    public void setDialogueList(ArrayList<String> dialogueList) {
+        this.dialogueList = dialogueList;
     }
 
 
