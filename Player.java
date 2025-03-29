@@ -9,7 +9,7 @@ public class Player extends Entities {
 
     public Player(int x, int y){
         super("Player", x, y, 0, 0, 59, 100, 
-        " ", "assets/baseidlel.gif", "assets/baseidler.gif", "assets/basewalkd.gif", "assets/basewalku.gif", "assets/basewalkl.gif", "assets/basewalkr.gif"
+        " ", "assets/player/baseidlel.gif", "assets/player/baseidler.gif", "assets/player/basewalkd.gif", "assets/player/basewalku.gif", "assets/player/basewalkl.gif", "assets/player/basewalkr.gif"
         );
         super.setSprite(getIdleL());
         
@@ -49,7 +49,7 @@ public class Player extends Entities {
     }
 
     public void Interact(Entities e, ArrayList<Stickers> s){
-    Stickers sticker = new Stickers("assets/eSticker.png", 13, 13);
+    Stickers sticker = new Stickers("assets/stickers/eSticker.png", 13, 13);
     if (e instanceof Npcs){
         System.out.println(((Npcs) e).isInteraction());
          if (inProximity((Npcs)e)&&!((Npcs) e).isInteraction()){
