@@ -33,4 +33,11 @@ public class Player extends Entities {
         }
     }
 
+    public void Interact(Entities e){
+    if (e.getX()-100 <= getX()+ getW()&&e.getX()+100 >= getX()){
+        System.out.println("interact with " + e);
+    }
+
+    }
+
 }

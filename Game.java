@@ -86,8 +86,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		drawSprites(g2d);
 		// System.out.println(testDialogue.getDialogueList());
 		testDialogue.runDialogue(active);
-		System.out.println(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue());
-	
+		// System.out.println(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue());
+		g2d.drawString(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue(), 200, 200);
 
 	
 		twoDgraph.drawImage(back, null, 0, 0);
@@ -103,6 +103,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		for (int i = 0; i < NPCS.size(); i++) {
 			Entities npc = NPCS.get(i);
 			npc.drawEntity(g2d);
+			player.Interact(npc);
 		}
 	}
 	

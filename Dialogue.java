@@ -67,15 +67,13 @@ public class Dialogue {
                 String ba = scan.nextLine();
                 temp.add(ba);
 
-                
-                
                
             }
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
- 
+        temp.add(" ");
         return temp;
     }
 
