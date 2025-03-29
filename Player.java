@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Player extends Entities {
 
@@ -11,6 +12,7 @@ public class Player extends Entities {
         );
         super.setSprite(getIdleL());
     }
+    // methods
 
     public void Move(){
         super.moveEntity();
@@ -33,9 +35,16 @@ public class Player extends Entities {
         }
     }
 
-    public void Interact(Entities e){
+    public void Interact(Entities e, ArrayList<Stickers> s){
+    Stickers sticker = new Stickers("assets/eSticker.png", 13, 13);
     if (e.getX()-100 <= getX()+ getW()&&e.getX()+100 >= getX()){
+        
+        s.add(sticker);
         System.out.println("interact with " + e);
+    } else if (!(e.getX()-100 <= getX()+ getW()&&e.getX()+100 >= getX())){
+       while (s.size()>1) { 
+            s.remove(s.get(1));
+       }
     }
 
     }

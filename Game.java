@@ -15,6 +15,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private Player player;
 	private Fern fern;
 	private ArrayList <Entities> NPCS, active;
+	private ArrayList<Stickers> stickers;
 	private Dialogue testDialogue;
 
 
@@ -29,9 +30,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		x=0;
 		y=0;
 		player = new Player(400, 400);
-		fern = new Fern(600,600);
+		fern = new Fern(400,400);
 		NPCS = setNPCS();
 		active = setActive();
+		stickers = setStickers();
 		testDialogue = new Dialogue("just testing to see if it works", "assets/dialogue/testDialogue", true);
 	
 	}
@@ -48,6 +50,12 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		ArrayList<Entities> temp = new ArrayList<Entities>();
 		temp.add(fern);
 		temp.add(player);
+		return temp;
+	}
+
+	public ArrayList<Stickers> setStickers(){
+		ArrayList<Stickers> temp = new ArrayList<Stickers>();
+		temp.add(new Stickers());
 		return temp;
 	}
 	
@@ -103,8 +111,16 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		for (int i = 0; i < NPCS.size(); i++) {
 			Entities npc = NPCS.get(i);
 			npc.drawEntity(g2d);
-			player.Interact(npc);
+			player.Interact(npc, stickers);
+
+			for (int j = 0; j < stickers.size(); j++) {
+				Stickers s = stickers.get(j);
+				s.Move(npc);
+				s.drawSticker(g2d);
+			}
 		}
+
+		
 	}
 	
 
