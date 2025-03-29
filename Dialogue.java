@@ -9,24 +9,19 @@ public class Dialogue {
 
     private String dialogueFile, dialogueDesc, cDialogue, removeSubStr;
     private Entities speaker;
-    private Boolean moveon;
     private ArrayList<String> dialogueList;
 
     public Dialogue(){
         dialogueFile = "";
         cDialogue = "";
         dialogueDesc = "";
-        
-        moveon = true;
-    }
+            }
 
-    public Dialogue (String dd, String df, boolean mo){
+    public Dialogue (String dd, String df){
         dialogueDesc = dd;
         dialogueFile = df;
         dialogueList = setDialogue();
 
-
-        moveon = mo;
 
     }
 
@@ -36,8 +31,8 @@ public class Dialogue {
 
         if (dialogueList == null){
 
-            dialogueList.add(" ");
-            speaker.setName(" ");
+            setDialogueList();
+
         } else {
             for (int i = 0; i < entities.size(); i++) {
                 Entities entity = entities.get(i);
@@ -45,11 +40,12 @@ public class Dialogue {
 
                 if (ba.startsWith(entity.getName())){ // if the dialogue starts with a character's name the program will set the current speaker to that character
                     speaker = entity;
-                    removeSubStr = entity.getName();
+                    removeSubStr = speaker.getName();
+                    cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue  
+                }
                 }
 
-                cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue  
-        }
+               
         }        
                    
     }
@@ -97,10 +93,6 @@ public class Dialogue {
         this.dialogueDesc = dialogueDesc;
     }
 
-    public Boolean getMoveon() {
-        return moveon;
-    }
-
     public String getcDialogue() {
         return cDialogue;
     }
@@ -117,9 +109,6 @@ public class Dialogue {
         this.cDialogue = cDialogue;
     }
 
-    public void setMoveon(Boolean moveon) {
-        this.moveon = moveon;
-    }
 
     public ArrayList<String> getDialogueList() {
         return dialogueList;

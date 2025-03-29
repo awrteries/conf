@@ -51,7 +51,7 @@ public class Player extends Entities {
     public void Interact(Entities e, ArrayList<Stickers> s){
     Stickers sticker = new Stickers("assets/stickers/eSticker.png", 13, 13);
     if (e instanceof Npcs){
-        System.out.println(((Npcs) e).isInteraction());
+        // System.out.println(((Npcs) e).isInteraction());
          if (inProximity((Npcs)e)&&!((Npcs) e).isInteraction()){
         
         s.add(sticker);

@@ -14,6 +14,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private int key, x, y; 
 	private Player player;
 	private Fern fern;
+	private Valentino val;
 	private ArrayList <Entities> speakable, active;
 	private ArrayList<Stickers> stickers;
 	private Dialogue testDialogue;
@@ -29,12 +30,14 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		key =-1; 
 		x=0;
 		y=0;
-		player = new Player(400, 400);
+		player = new Player(200, 400);
 		fern = new Fern(400,400);
+		val = new Valentino(600, 400);
 		speakable = setSpeakable();
 		active = setActive();
 		stickers = setStickers();
-		testDialogue = new Dialogue("just testing to see if it works", "assets/dialogue/testDialogue", true);
+		testDialogue = new Dialogue();
+		testDialogue.setDialogueList();
 	
 	}
 
@@ -45,6 +48,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public ArrayList<Entities> setActive(){
 		ArrayList<Entities> temp = new ArrayList<Entities>();		
 		
+		temp.add(val);
 		temp.add(fern);
 		
 		return temp;
@@ -198,7 +202,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				}
 				
 	
-         System.out.println(testDialogue.getSpeaker().getName() + ": " + testDialogue.getcDialogue());
+        //  System.out.println(testDialogue.getSpeaker().getName() + ": " + testDialogue.getcDialogue());
 		}
 
 		if (key ==69){ // E
@@ -208,6 +212,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				if(en instanceof Npcs){
 					if (player.inProximity((Npcs)en)){
 						((Npcs) en).setInteraction(true);
+						testDialogue=((Npcs) en).getcDialogue();
 						testDialogue.setDialogueList();
 
 					}
