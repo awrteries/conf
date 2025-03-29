@@ -35,7 +35,9 @@ public class Dialogue {
     public void runDialogue(ArrayList<Entities> entities){
 
         if (dialogueList == null){
+
             dialogueList.add(" ");
+            speaker.setName(" ");
         } else {
             for (int i = 0; i < entities.size(); i++) {
                 Entities entity = entities.get(i);
@@ -123,8 +125,8 @@ public class Dialogue {
         return dialogueList;
     }
 
-    public void setDialogueList(ArrayList<String> dialogueList) {
-        this.dialogueList = dialogueList;
+    public void setDialogueList() {
+        this.dialogueList = setDialogue();
     }
 
 

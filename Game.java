@@ -14,7 +14,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private int key, x, y; 
 	private Player player;
 	private Fern fern;
-	private ArrayList <Entities> NPCS, active;
+	private ArrayList <Entities> speakable, active;
 	private ArrayList<Stickers> stickers;
 	private Dialogue testDialogue;
 
@@ -31,7 +31,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		y=0;
 		player = new Player(400, 400);
 		fern = new Fern(400,400);
-		NPCS = setNPCS();
+		speakable = setSpeakable();
 		active = setActive();
 		stickers = setStickers();
 		testDialogue = new Dialogue("just testing to see if it works", "assets/dialogue/testDialogue", true);
@@ -40,18 +40,21 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 	// setting arraylists
 
-	public ArrayList<Entities> setNPCS(){
-		ArrayList<Entities> temp = new ArrayList<Entities>();
+	
+
+	public ArrayList<Entities> setActive(){
+		ArrayList<Entities> temp = new ArrayList<Entities>();		
+		
 		temp.add(fern);
+		
 		return temp;
 	}
 
-	public ArrayList<Entities> setActive(){
-		ArrayList<Entities> temp = new ArrayList<Entities>();
-		temp.add(fern);
-		temp.add(player);
-		return temp;
-	}
+	public ArrayList<Entities> setSpeakable(){
+			ArrayList<Entities> temp = setActive();
+			temp.add(player);
+			return temp;
+		}
 
 	public ArrayList<Stickers> setStickers(){
 		ArrayList<Stickers> temp = new ArrayList<Stickers>();
@@ -92,10 +95,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	
 
 		drawSprites(g2d);
-		// System.out.println(testDialogue.getDialogueList());
-		testDialogue.runDialogue(active);
-		// System.out.println(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue());
-		g2d.drawString(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue(), 200, 200);
+		// testDialogue.runDialogue(speakable);
+		// if (testDialogue.getDialogueList().size()>1){
+		// 	g2d.drawString(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue(), 200, 200);
+
+		// }
 
 	
 		twoDgraph.drawImage(back, null, 0, 0);
@@ -108,18 +112,28 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		player.drawEntity(g2d);
 		player.Move();
 
-		for (int i = 0; i < NPCS.size(); i++) {
-			Entities npc = NPCS.get(i);
+		for (int i = 0; i < active.size(); i++) {
+			Entities npc = active.get(i);
 			npc.drawEntity(g2d);
 			player.Interact(npc, stickers);
 
+			if (npc instanceof Npcs){
+				if (((Npcs) npc).isInteraction()){
+					testDialogue.runDialogue(speakable);
+					if (testDialogue.getDialogueList().size()>1){
+					g2d.drawString(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue(), 200, 200);
+		
+				}
+				}
+				
+			}
 			for (int j = 0; j < stickers.size(); j++) {
 				Stickers s = stickers.get(j);
 				s.Move(npc);
 				s.drawSticker(g2d);
 			}
 		}
-
+		
 		
 	}
 	
@@ -175,7 +189,31 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			player.setW(56);
 			player.setSprite(player.getWalkD());
 		}
-		
+
+		if (key == 32){ // [SPACE]	
+			ArrayList<String> dl = testDialogue.getDialogueList();
+			
+				if (dl.size()>1){
+				dl.remove(0);	
+				}
+				
+	
+         System.out.println(testDialogue.getSpeaker().getName() + ": " + testDialogue.getcDialogue());
+		}
+
+		if (key ==69){ // E
+			for (int i = 0; i < active.size(); i++) {
+				Entities en = active.get(i);
+
+				if(en instanceof Npcs){
+					if (player.inProximity((Npcs)en)){
+						((Npcs) en).setInteraction(true);
+						testDialogue.setDialogueList();
+
+					}
+				}
+			}
+		}
 	
 	}
 
@@ -205,10 +243,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 		}
 
-		if (key == 32){ // [SPACE]
-		testDialogue.getDialogueList().remove(0);
-        System.out.println(testDialogue.getSpeaker().getName() + ": " + testDialogue.getcDialogue());
-		}
+		
+		
 		
 		
 		

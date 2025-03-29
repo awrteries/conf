@@ -10,7 +10,8 @@ public class Entities {
     
         private int x, y, dx, dy, w, h;
         private String name, sprite, idleL, idleR, walkD, walkU, walkL, walkR;
-    
+        private boolean interaction;
+
         // constructors
     
         public Entities(){

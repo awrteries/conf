@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Player extends Entities {
 
+
     public Player(){
         super();
     }
@@ -11,8 +12,20 @@ public class Player extends Entities {
         " ", "assets/baseidlel.gif", "assets/baseidler.gif", "assets/basewalkd.gif", "assets/basewalku.gif", "assets/basewalkl.gif", "assets/basewalkr.gif"
         );
         super.setSprite(getIdleL());
+        
     }
     // methods
+
+    public boolean inProximity(Npcs e){
+        
+        if (e.getX()-100 <= getX()+ getW()&&e.getX()+100 >= getX()){
+            return true;
+        } else
+        e.setInteraction(false);
+        return false;
+    }
+
+  
 
     public void Move(){
         super.moveEntity();
@@ -37,15 +50,21 @@ public class Player extends Entities {
 
     public void Interact(Entities e, ArrayList<Stickers> s){
     Stickers sticker = new Stickers("assets/eSticker.png", 13, 13);
-    if (e.getX()-100 <= getX()+ getW()&&e.getX()+100 >= getX()){
+    if (e instanceof Npcs){
+        System.out.println(((Npcs) e).isInteraction());
+         if (inProximity((Npcs)e)&&!((Npcs) e).isInteraction()){
         
         s.add(sticker);
-        System.out.println("interact with " + e);
-    } else if (!(e.getX()-100 <= getX()+ getW()&&e.getX()+100 >= getX())){
+    } else if (!inProximity((Npcs)e)||((Npcs) e).isInteraction()){
        while (s.size()>1) { 
             s.remove(s.get(1));
        }
+       
+
+    } 
+
     }
+  
 
     }
 
