@@ -9,9 +9,9 @@ public class Player extends Entities {
 
     public Player(int x, int y){
         super("Player", x, y, 0, 0, 59, 100, 
-        " ", "assets/player/baseidlel.gif", "assets/player/baseidler.gif", "assets/player/basewalkd.gif", "assets/player/basewalku.gif", "assets/player/basewalkl.gif", "assets/player/basewalkr.gif"
+        "assets/player/baseidlel.gif", "assets/player/baseidlel.gif", "assets/player/baseidler.gif", "assets/player/basewalkd.gif", "assets/player/basewalku.gif", "assets/player/basewalkl.gif", "assets/player/basewalkr.gif"
         );
-        super.setSprite(getIdleL());
+
         
     }
     // methods

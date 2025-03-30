@@ -27,7 +27,12 @@ public class Stickers {
     // methods
 
     public void Move(Entities e){ // locks the sticker to an entity
-        x = (e.getX()+e.getW())-20;
+        if (e.getSprite().equals(e.getIdleR())){
+        x = (e.getX()+e.getW());   
+        } else if (e.getSprite().equals(e.getIdleL())){
+        x = (e.getX()+e.getW()-25);  
+        }
+        
         y = (e.getY()+e.getH()*2)-70;
         entity = e;
     }
