@@ -7,9 +7,9 @@ public class Dialogue {
 
     // constructors
 
-    private String dialogueFile, dialogueDesc, cDialogue, removeSubStr;
+    private String dialogueFile, dialogueDesc, cDialogue, removeSubStr, cWord;
     private Entities speaker;
-    private ArrayList<String> dialogueList;
+    private ArrayList<String> dialogueList, cWList;
 
     public Dialogue(){
         dialogueFile = "";
@@ -21,6 +21,7 @@ public class Dialogue {
         dialogueDesc = dd;
         dialogueFile = df;
         dialogueList = setDialogue();
+        cWList = new ArrayList<String>();
 
 
     }
@@ -41,7 +42,8 @@ public class Dialogue {
                 if (ba.startsWith(entity.getName())){ // if the dialogue starts with a character's name the program will set the current speaker to that character
                     speaker = entity;
                     removeSubStr = speaker.getName();
-                    cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue  
+                    cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue 
+                    setcW();
                 }
                 }
 
@@ -49,6 +51,31 @@ public class Dialogue {
         }        
                    
     }
+
+    public void setcW(){
+        emptycW();
+
+        String[] word = cDialogue.split(" "); 
+
+       for (int i = 0; i < word.length; i++) {
+                cWList.add(word[i]);
+            
+       }
+    }
+
+    public void emptycW(){
+        if(cWList.size()>1){
+            for (int i = cWList.size()-1; i > -1   ; i--) {
+                cWList.remove(i);
+            }
+        }
+    }
+
+    // public ArrayList<String> setcWList(){
+    //     ArrayList<String> temp = new ArrayList<String>();
+
+    //     return temp;
+    // }
 
     public ArrayList<String> setDialogue(){
         ArrayList<String> temp = new ArrayList<String>();
@@ -116,6 +143,26 @@ public class Dialogue {
 
     public void setDialogueList() {
         this.dialogueList = setDialogue();
+    }
+
+    public String getcWord() {
+        return cWord;
+    }
+
+    public void setcWord(String cWord) {
+        this.cWord = cWord;
+    }
+
+    public void setDialogueList(ArrayList<String> dialogueList) {
+        this.dialogueList = dialogueList;
+    }
+
+    public ArrayList<String> getcWList() {
+        return cWList;
+    }
+
+    public void setcWList(ArrayList<String> cWList) {
+        this.cWList = cWList;
     }
 
 

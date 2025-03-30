@@ -18,7 +18,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private Lien peng;
 	private ArrayList <Entities> speakable, active;
 	private ArrayList<Stickers> stickers;
+	private ArrayList<Interface> inter;
 	private Dialogue testDialogue;
+	private Interface sDBox;
 
 
 
@@ -38,8 +40,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		speakable = setSpeakable();
 		active = setActive();
 		stickers = setStickers();
+		inter = setInter();
 		testDialogue = new Dialogue();
 		testDialogue.setDialogueList();
+		sDBox = new Interface("assets/boxes/silverdbox.png", 400, 580, 350, 108);
 	
 	}
 
@@ -66,6 +70,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public ArrayList<Stickers> setStickers(){
 		ArrayList<Stickers> temp = new ArrayList<Stickers>();
 		temp.add(new Stickers());
+		return temp;
+	}
+	public ArrayList<Interface> setInter(){
+		ArrayList<Interface> temp = new ArrayList<Interface>();
+		temp.add(new Interface());
 		return temp;
 	}
 	
@@ -99,7 +108,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		Graphics g2d = back.createGraphics();
 	
 		g2d.clearRect(0,0,getSize().width, getSize().height);
-	
+		
 
 		drawSprites(g2d);
 		// testDialogue.runDialogue(speakable);
@@ -119,6 +128,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		player.drawEntity(g2d);
 		player.Move();
 
+		// drawing sprites and setting dialogue
+
 		for (int i = 0; i < active.size(); i++) {
 			Entities npc = active.get(i);
 			npc.drawEntity(g2d);
@@ -129,8 +140,15 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 					testDialogue.runDialogue(speakable);
 					if (testDialogue.getDialogueList().size()>1){
 						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 60));
+						for (int j = 0; j < inter.size(); j++) {
+						inter.get(j).drawInterface(g2d);
+		}
 					g2d.drawString(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue(), 200, 200);
-		
+
+					for (int j = 0; j < testDialogue.getcWList().size(); j++) {
+						String word = testDialogue.getcWList().get(j);
+						System.out.println(word);
+					}
 				}
 				}
 				
@@ -141,6 +159,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				s.drawSticker(g2d);
 			}
 		}
+
+		// drawing the interface
+		
+		
 		
 		
 	}
@@ -203,13 +225,16 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			
 				if (dl.size()>1){
 				dl.remove(0);	
+				
 				}
+				
 				
 	
         //  System.out.println(testDialogue.getSpeaker().getName() + ": " + testDialogue.getcDialogue());
 		}
 
 		if (key ==69){ // E
+			inter.add(sDBox);
 			for (int i = 0; i < active.size(); i++) {
 				Entities en = active.get(i);
 
@@ -218,6 +243,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 						((Npcs) en).setInteraction(true);
 						testDialogue=((Npcs) en).getcDialogue();
 						testDialogue.setDialogueList();
+						testDialogue.setcW();
 
 					}
 				}
@@ -250,6 +276,12 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			player.setW(59);
 			player.setSprite(player.getIdleL());
 
+		}
+
+		if (key == 32){ // [SPACE]	
+			ArrayList<String> dl = testDialogue.getDialogueList();
+			testDialogue.setcW();
+		
 		}
 
 		
