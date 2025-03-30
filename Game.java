@@ -33,10 +33,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		key =-1; 
 		x=0;
 		y=0;
-		player = new Player(200, 400);
-		fern = new Fern(400,400);
-		val = new Valentino(600, 400);
-		peng = new Lien(500, 200);
+		player = new Player(450, 450);
+		fern = new Fern(400,200);
+		val = new Valentino(800, 300);
+		peng = new Lien(200, 400);
 		speakable = setSpeakable();
 		active = setActive();
 		stickers = setStickers();
@@ -108,6 +108,13 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		Graphics g2d = back.createGraphics();
 	
 		g2d.clearRect(0,0,getSize().width, getSize().height);
+
+		// Set the font to be used for the dialogue text (example font)
+		Font font = new Font("Arial", Font.PLAIN, 24);
+		g2d.setFont(font);
+	
+		// Get the FontMetrics for the current font
+		FontMetrics fm = g2d.getFontMetrics();
 		
 
 		drawSprites(g2d);
@@ -139,16 +146,17 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				if (((Npcs) npc).isInteraction()){
 					testDialogue.runDialogue(speakable);
 					if (testDialogue.getDialogueList().size()>1){
-						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 60));
+						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 35));
 						for (int j = 0; j < inter.size(); j++) {
 						inter.get(j).drawInterface(g2d);
 		}
-					g2d.drawString(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue(), 200, 200);
-
+					g2d.drawString(testDialogue.getSpeaker().getName(), 420, 612);
+					g2d.setColor(Color.white);
 					for (int j = 0; j < testDialogue.getcWList().size(); j++) {
 						String word = testDialogue.getcWList().get(j);
-						System.out.println(word);
+						// System.out.println(word);
 					}
+					testDialogue.drawcW(g2d, 430, 660);
 				}
 				}
 				

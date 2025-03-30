@@ -1,3 +1,5 @@
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -68,6 +70,25 @@ public class Dialogue {
             for (int i = cWList.size()-1; i > -1   ; i--) {
                 cWList.remove(i);
             }
+        }
+    }
+
+    public void drawcW(Graphics g2d, int startx, int starty){
+        FontMetrics fm = g2d.getFontMetrics(); 
+            int wordSpacing = 10; 
+            int sx = startx;
+            for (int i = 0; i < cWList.size(); i++) {
+            String word = cWList.get(i);
+    
+            int wordWidth = fm.stringWidth(word);
+    
+            if (sx + wordWidth > 1080) {
+                sx = startx; // Reset to the left margin
+                starty += fm.getHeight()-5; // Move down by the height of the font
+            }
+    
+            g2d.drawString(word, sx, starty);
+                sx += wordWidth + wordSpacing; 
         }
     }
 
