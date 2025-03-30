@@ -15,6 +15,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private Player player;
 	private Fern fern;
 	private Valentino val;
+	private Lien peng;
 	private ArrayList <Entities> speakable, active;
 	private ArrayList<Stickers> stickers;
 	private Dialogue testDialogue;
@@ -33,6 +34,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		player = new Player(200, 400);
 		fern = new Fern(400,400);
 		val = new Valentino(600, 400);
+		peng = new Lien(500, 200);
 		speakable = setSpeakable();
 		active = setActive();
 		stickers = setStickers();
@@ -50,6 +52,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 		temp.add(val);
 		temp.add(fern);
+		temp.add(peng);
 		
 		return temp;
 	}
@@ -125,6 +128,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				if (((Npcs) npc).isInteraction()){
 					testDialogue.runDialogue(speakable);
 					if (testDialogue.getDialogueList().size()>1){
+						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 60));
 					g2d.drawString(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue(), 200, 200);
 		
 				}

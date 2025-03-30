@@ -18,7 +18,7 @@ public class Player extends Entities {
 
     public boolean inProximity(Npcs e){
         
-        if (e.getX()-100 <= getX()+ getW()&&e.getX()+100 >= getX()){
+        if ((e.getX()-100 <= getX()+ getW()&&e.getX()+150 >= getX())&&((e.getY()-20<getY())&&(e.getY()+e.getH()*2+20>getY()+getH()*2))){
             return true;
         } else
         e.setInteraction(false);
