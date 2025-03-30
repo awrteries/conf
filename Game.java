@@ -110,7 +110,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		g2d.clearRect(0,0,getSize().width, getSize().height);
 
 		// Set the font to be used for the dialogue text (example font)
-		Font font = new Font("Arial", Font.PLAIN, 24);
+		Font font = new Font("Arial", Font.PLAIN, 35);
 		g2d.setFont(font);
 	
 		// Get the FontMetrics for the current font
@@ -146,17 +146,23 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				if (((Npcs) npc).isInteraction()){
 					testDialogue.runDialogue(speakable);
 					if (testDialogue.getDialogueList().size()>1){
-						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 35));
+	
+						
 						for (int j = 0; j < inter.size(); j++) {
 						inter.get(j).drawInterface(g2d);
-		}
-					g2d.drawString(testDialogue.getSpeaker().getName(), 420, 612);
-					g2d.setColor(Color.white);
-					for (int j = 0; j < testDialogue.getcWList().size(); j++) {
-						String word = testDialogue.getcWList().get(j);
+						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 35));
+						g2d.drawString(testDialogue.getSpeaker().getName(), 420, 612);
+						g2d.setColor(Color.white);
+						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 15)); // please figure out a more efficient font size changer thing
+						g2d.drawString("press [SPACE] to continue.", 940, 770);
+						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 30));
+						for (int l = 0; l < testDialogue.getcWList().size(); l++) {
+						String word = testDialogue.getcWList().get(l);
 						// System.out.println(word);
-					}
-					testDialogue.drawcW(g2d, 430, 660);
+						}
+						testDialogue.drawcW(g2d, 430, 660);
+		}
+					
 				}
 				}
 				
