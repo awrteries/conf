@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player extends Entities {
 
@@ -27,7 +28,7 @@ public class Player extends Entities {
 
   
 
-    public void Move(){
+    public void Move(ArrayList<Entities> en){
         super.moveEntity();
 
         int wi = 1420;
@@ -46,6 +47,25 @@ public class Player extends Entities {
         else if (getY()+getH()> hi-35){
             setY(hi-35-getH());
         }
+        for (int i = 0; i < en.size(); i++) {
+            Entities e = en.get(i);
+         if (e instanceof Npcs){
+            Npcs n = (Npcs) e;
+
+            // System.out.println((n.getY()+(n.getH()*2)) + " " + (getY()+getH()));
+
+            if(getY()+getH()*2>n.getY()+n.getH()*2&&en.indexOf(this)<i){
+                
+                Collections.swap(en, en.indexOf(this), i);
+            } else if (getY()+getH()*2<n.getY()+n.getH()*2&&en.indexOf(this)>i){
+                // C
+                Collections.swap(en, en.indexOf(this), i);
+        
+            }
+        }   
+        }
+
+        
     }
 
     public void Interact(Entities e, ArrayList<Stickers> s){

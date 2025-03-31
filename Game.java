@@ -55,15 +55,17 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		ArrayList<Entities> temp = new ArrayList<Entities>();		
 		
 		temp.add(val);
+		temp.add(player);
 		temp.add(fern);
 		temp.add(peng);
+		
 		
 		return temp;
 	}
 
 	public ArrayList<Entities> setSpeakable(){
 			ArrayList<Entities> temp = setActive();
-			temp.add(player);
+			// temp.add(player);
 			return temp;
 		}
 
@@ -132,18 +134,23 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	// methods
 
 	public void drawSprites(Graphics g2d){
-		player.drawEntity(g2d);
-		player.Move();
+		// player.drawEntity(g2d);
+		player.Move(active);
 
 		// drawing sprites and setting dialogue
 
 		for (int i = 0; i < active.size(); i++) {
 			Entities npc = active.get(i);
 			npc.drawEntity(g2d);
-			player.Interact(npc, stickers);
+			
 
 			if (npc instanceof Npcs){
-				if (((Npcs) npc).isInteraction()){
+				player.Interact(npc, stickers);
+				if (((Npcs) npc).isInteraction()){for (int j = 0; j < stickers.size(); j++) {
+				Stickers s = stickers.get(j);
+				s.Move((Npcs)npc);
+				s.drawSticker(g2d);
+			}
 					testDialogue.runDialogue(speakable);
 					if (testDialogue.getDialogueList().size()>1){
 	
@@ -165,13 +172,15 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 					
 				}
 				}
+
+				for (int j = 0; j < stickers.size(); j++) {
+					Stickers s = stickers.get(j);
+					s.Move((Npcs)npc);
+					s.drawSticker(g2d);
+				}
 				
 			}
-			for (int j = 0; j < stickers.size(); j++) {
-				Stickers s = stickers.get(j);
-				s.Move(npc);
-				s.drawSticker(g2d);
-			}
+			
 		}
 
 		// drawing the interface

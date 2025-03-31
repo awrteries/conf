@@ -26,7 +26,7 @@ public class Stickers {
 
     // methods
 
-    public void Move(Entities e){ // locks the sticker to an entity
+    public void Move(Npcs e){ // locks the sticker to an entity
         if (e.getSprite().equals(e.getIdleR())){
         x = (e.getX()+e.getW());   
         } else if (e.getSprite().equals(e.getIdleL())){
