@@ -18,7 +18,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private Lien peng;
 	private ArrayList <Entities> speakable, active;
 	private ArrayList<Stickers> stickers;
-	private ArrayList<Interface> inter;
 	private Dialogue testDialogue;
 	private Interface sDBox;
 
@@ -40,7 +39,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		speakable = setSpeakable();
 		active = setActive();
 		stickers = setStickers();
-		inter = setInter();
+		// inter = setInter();
 		testDialogue = new Dialogue();
 		testDialogue.setDialogueList();
 		sDBox = new Interface("assets/boxes/silverdbox.png", 400, 580, 350, 108);
@@ -155,20 +154,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 					if (testDialogue.getDialogueList().size()>1){
 	
 						
-						for (int j = 0; j < inter.size(); j++) {
-						inter.get(j).drawInterface(g2d);
-						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 35));
-						g2d.drawString(testDialogue.getSpeaker().getName(), 420, 612);
-						g2d.setColor(Color.white);
-						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 15)); // please figure out a more efficient font size changer thing
-						g2d.drawString("press [SPACE] to continue.", 940, 770);
-						g2d.setFont(new Font("Jersey 10", Font.PLAIN, 30));
-						for (int l = 0; l < testDialogue.getcWList().size(); l++) {
-						String word = testDialogue.getcWList().get(l);
-						// System.out.println(word);
-						}
-						testDialogue.drawcW(g2d, 430, 660);
-		}
+						testDialogue.drawDialogue(g2d);
 					
 				}
 				}
@@ -257,7 +243,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		}
 
 		if (key ==69){ // E
-			inter.add(sDBox);
 			for (int i = 0; i < active.size(); i++) {
 				Entities en = active.get(i);
 
@@ -304,6 +289,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		if (key == 32){ // [SPACE]	
 			ArrayList<String> dl = testDialogue.getDialogueList();
 			testDialogue.setcW();
+			testDialogue.changeInter();
 		
 		}
 		if (key ==69){ // E

@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.io.File;
@@ -9,9 +11,13 @@ public class Dialogue {
 
     // constructors
 
-    private String dialogueFile, dialogueDesc, cDialogue, removeSubStr, cWord;
+    private String dialogueFile, dialogueDesc, cDialogue, removeSubStr, cWord, dInstruction;
+    private String[] splitAC;
     private Entities speaker;
-    private ArrayList<String> dialogueList, cWList;
+    private ArrayList<String> dialogueList, cWList, aCList;
+    private ArrayList<Interface> inter;
+
+    // private ArrayList<Interface> 
 
     public Dialogue(){
         dialogueFile = "";
@@ -24,11 +30,66 @@ public class Dialogue {
         dialogueFile = df;
         dialogueList = setDialogue();
         cWList = new ArrayList<String>();
+        aCList = new ArrayList<String>();
+        aCList.add("");
+        inter = new ArrayList<Interface>();
+        inter.add(new Interface("assets/boxes/silverdbox.png", 400, 580, 350, 108));
+        splitAC = "".split("");
+        dInstruction = "press [SPACE] to continue.";
 
 
     }
 
     // methods
+    public void changeInter (){
+        int iy = 596;
+        if (aCList.size()>1){
+            for (int j = 0; j < aCList.size()-1 ; j++) {
+                
+                inter.add(new Interface("assets/boxes/silverdAC.png",407+350*2, iy, 108, 32 ));
+                iy += 34*2;
+                dInstruction = "[ARROW KEYS] to select.";
+     
+        }
+        } else {
+            dInstruction = "press [SPACE] to continue.";
+        }
+        System.out.println(inter.size());
+
+    }
+
+    public void drawDialogue(Graphics g2d){
+        for (int i = 0; i < inter.size(); i++) {
+            Interface in = inter.get(i);
+            in.drawInterface(g2d);
+
+            
+
+            
+        }
+            g2d.setFont(new Font("Jersey 10", Font.PLAIN, 35));
+			g2d.drawString(getSpeaker().getName(), 420, 612);
+			g2d.setColor(Color.white);
+			g2d.setFont(new Font("Jersey 10", Font.PLAIN, 15)); // please figure out a more efficient font size changer thing
+			g2d.drawString(dInstruction, 940, 770);
+			
+            g2d.setFont(new Font("Jersey 10", Font.PLAIN, 30));
+			
+            drawcW(g2d, 430, 660);
+            drawAC(g2d);
+            
+            
+    }
+
+    public void drawAC(Graphics g2d){
+        // FontMetrics fm = g2d.getFontMetrics();
+        g2d.setFont(new Font("Jersey 10", Font.PLAIN, 25)); 
+        int iy = 635;
+        for (int i = 1; i < aCList.size(); i++) {
+            g2d.drawString(aCList.get(i), 1130, iy);
+            iy += 68;
+        }
+    }
 
     public void runDialogue(ArrayList<Entities> entities){
 
@@ -46,6 +107,15 @@ public class Dialogue {
                     removeSubStr = speaker.getName();
                     cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue 
                     setcW();
+                } else if (ba.startsWith("AC")){
+                    splitAC = (ba.replace("AC ", "")).split("_");
+                    for (int j = 0; j < splitAC.length; j++) {
+                        aCList.add(splitAC[j]);
+                        // System.out.println(aCList.size());
+                    }
+                    dialogueList.remove(0);
+                    
+
                 }
                 }
 
