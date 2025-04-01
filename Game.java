@@ -267,7 +267,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 						testDialogue=((Npcs) en).getcDialogue();
 						testDialogue.setDialogueList();
 						testDialogue.setcW();
-
+						player.eyeContact((Npcs)en);
 					}
 				}
 			}
@@ -306,7 +306,16 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			testDialogue.setcW();
 		
 		}
+		if (key ==69){ // E
+			for (int i = 0; i < active.size(); i++) {
+				Entities en = active.get(i);
 
+				if(en instanceof Npcs){
+					player.eyeContact((Npcs)en);
+				}
+			}
+		
+		}
 		
 		
 		

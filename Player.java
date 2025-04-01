@@ -33,6 +33,7 @@ public class Player extends Entities {
 
         int wi = 1420;
         int hi = 750;
+        
         if( getX() < 0){
             setX(0);
         }
@@ -68,14 +69,31 @@ public class Player extends Entities {
         
     }
 
+    public void eyeContact(Npcs n){
+
+        if (inProximity(n)){
+          if (this.getX()<n.getX()){
+            n.setSprite(n.getIdleL());
+            setSprite(getIdleR());
+        }else if(this.getX()>n.getX()+n.getW()){
+            n.setSprite(n.getIdleR());
+            setSprite(getIdleL());
+        }     
+        }
+      
+        
+        
+    }
+
     public void Interact(Entities e, ArrayList<Stickers> s){
     Stickers sticker = new Stickers("assets/stickers/eSticker.png", 13, 13);
     if (e instanceof Npcs){
+        Npcs n = (Npcs) e;
         // System.out.println(((Npcs) e).isInteraction());
-         if (inProximity((Npcs)e)&&!((Npcs) e).isInteraction()){
+         if (inProximity(n)&&!(n).isInteraction()){
         
         s.add(sticker);
-    } else if (!inProximity((Npcs)e)||((Npcs) e).isInteraction()){
+    } else if (!inProximity(n)||(n).isInteraction()){
        while (s.size()>1) { 
             s.remove(s.get(1));
        }
