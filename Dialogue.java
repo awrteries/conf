@@ -34,7 +34,6 @@ public class Dialogue {
         dialogueList = setDialogue();
         cWList = new ArrayList<String>();
         aCList = new ArrayList<String>();
-        aCList.add("");
         ECList = new ArrayList<String>();
         inter = new ArrayList<Interface>();
         inter.add(new Interface("assets/boxes/silverdbox.png", 400, 580, 350, 108));
@@ -56,8 +55,8 @@ public class Dialogue {
 
     public void changeInter (){
         int iy = 596;
-        if (aCList.size()>1){
-            for (int j = 0; j < aCList.size()-1 ; j++) {
+        if (aCList.size()>0){
+            for (int j = 0; j < aCList.size() ; j++) {
                 
                 inter.add(new Interface("assets/boxes/silverdAC.png",407+350*2, iy, 108, 32 ));
                 iy += 34*2;
@@ -98,9 +97,9 @@ public class Dialogue {
         // FontMetrics fm = g2d.getFontMetrics();
         g2d.setFont(new Font("Jersey 10", Font.PLAIN, 25)); 
         int iy = 635;
-        for (int i = 1; i < aCList.size(); i++) {
+        for (int i = 0; i < aCList.size(); i++) {
 
-            if (i-1==sel){
+            if (i==sel){
                 g2d.setColor(Color.red);
             } else {
                 g2d.setColor(Color.white);
@@ -139,12 +138,16 @@ public class Dialogue {
                 }   else if (ba.startsWith("EC")){
                     String[] splitEC = (ba.replace("EC", "")).split("_");
                     
+                    while (!ECList.isEmpty()){
+                        ECList.remove(0);
+                    }
+                    
                     while (ECList.size()<splitEC.length){
                         for (int l = 0; l < splitEC.length; l++) {
                             ECList.add(splitEC[l]);
                         } 
                     }   
-                    System.out.println(ECList.size());               
+                    // System.out.println(ECList.size());               
                     for (int h = 0; h < ECList.size(); h++) {
                         if (ECList.get(h).startsWith(entity.getName())){
                             speaker = entity;
@@ -161,9 +164,7 @@ public class Dialogue {
                     aChoosing = false; 
                 } else if (ba.equals(" ")){
                     cDialogue = cDialogue;
-                    while (!ECList.isEmpty()){
-                        ECList.remove(0);
-                    }
+                    
                 }
                 }
 
