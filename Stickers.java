@@ -26,14 +26,22 @@ public class Stickers {
 
     // methods
 
-    public void Move(Npcs e){ // locks the sticker to an entity
+    public void Move(Entities e){ // locks the sticker to an entity
         if (e.getSprite().equals(e.getIdleR())){
         x = (e.getX()+e.getW());   
         } else if (e.getSprite().equals(e.getIdleL())){
         x = (e.getX()+e.getW()-25);  
+        } else {
+            x = (e.getX()+e.getW());
+        }
+
+        if (e instanceof Npcs){
+            y = (e.getY()+e.getH()*2)-70;
+        } else {
+            y = (e.getY()+(e.getH()/4));
         }
         
-        y = (e.getY()+e.getH()*2)-70;
+        
         entity = e;
     }
 

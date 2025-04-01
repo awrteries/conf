@@ -15,11 +15,12 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private Player player;
 	private Fern fern;
 	private Valentino val;
+	private Blythe blythe;
 	private Lien peng;
+	private CBox box; 
 	private ArrayList <Entities> speakable, active;
 	private ArrayList<Stickers> stickers;
 	private Dialogue testDialogue;
-	private Interface sDBox;
 
 
 
@@ -35,15 +36,13 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		player = new Player(450, 450);
 		fern = new Fern(400,200);
 		val = new Valentino(800, 300);
+		blythe = new Blythe(1000,310);
 		peng = new Lien(200, 400);
-		speakable = setSpeakable();
+		box = new CBox(800,200);
 		active = setActive();
 		stickers = setStickers();
-		// inter = setInter();
 		testDialogue = new Dialogue();
-		testDialogue.setDialogueList();
-		sDBox = new Interface("assets/boxes/silverdbox.png", 400, 580, 350, 108);
-	
+		testDialogue.setDialogueList();	
 	}
 
 	// setting arraylists
@@ -57,16 +56,12 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		temp.add(player);
 		temp.add(fern);
 		temp.add(peng);
+		temp.add(blythe);
+		temp.add(box);
 		
 		
 		return temp;
 	}
-
-	public ArrayList<Entities> setSpeakable(){
-			ArrayList<Entities> temp = setActive();
-			// temp.add(player);
-			return temp;
-		}
 
 	public ArrayList<Stickers> setStickers(){
 		ArrayList<Stickers> temp = new ArrayList<Stickers>();
@@ -143,14 +138,14 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			npc.drawEntity(g2d);
 			
 
-			if (npc instanceof Npcs){
+			if (!(npc instanceof Player)){
 				player.Interact(npc, stickers);
-				if (((Npcs) npc).isInteraction()){for (int j = 0; j < stickers.size(); j++) {
+				if (npc.isInteraction()){for (int j = 0; j < stickers.size(); j++) {
 				Stickers s = stickers.get(j);
-				s.Move((Npcs)npc);
+				s.Move(npc);	
 				s.drawSticker(g2d);
 			}
-					testDialogue.runDialogue(speakable);
+					testDialogue.runDialogue(active);
 					if (testDialogue.getDialogueList().size()>1){
 	
 						
@@ -161,7 +156,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 				for (int j = 0; j < stickers.size(); j++) {
 					Stickers s = stickers.get(j);
-					s.Move((Npcs)npc);
+					s.Move(npc);
 					s.drawSticker(g2d);
 				}
 				

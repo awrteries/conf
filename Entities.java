@@ -13,6 +13,17 @@ public class Entities {
         private boolean interaction;
 
         // constructors
+
+        public Entities(String s, int x1, int y1, int dx1, int dy1, int width, int height, boolean in){
+            sprite = s;
+            x= x1;
+            y = y1;
+            dx= dx1;
+            dy = dy1;
+            w = width;
+            h=height;
+            interaction = in;
+        }
     
         public Entities(){
             
@@ -36,6 +47,28 @@ public class Entities {
         }
 
         public Entities(String n, int x1, int y1, int dx1, int dy1, int width, int height,
+        String s, String iL, String iR, String wD, String wU, String wL, String wR, boolean in){
+            
+            name = n;
+            
+            x = x1;
+            y = y1;
+            dx = dx1;
+            dy = dy1;
+            w = width;
+            h = height;
+
+            sprite = s;
+            idleL = iL;
+            idleR = iR;
+            walkD = wD;
+            walkU = wU;
+            walkL = wL;
+            walkR = wR;
+
+            interaction = in;
+        }
+        public Entities(String n, int x1, int y1, int dx1, int dy1, int width, int height,
         String s, String iL, String iR, String wD, String wU, String wL, String wR){
             
             name = n;
@@ -54,17 +87,12 @@ public class Entities {
             walkU = wU;
             walkL = wL;
             walkR = wR;
+
         }
 
         // methods
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+       
 
         public void drawEntity(Graphics g2d){ // draws the sprite
 
@@ -78,6 +106,22 @@ public class Entities {
         }
 
         // getters and setters
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public boolean isInteraction() {
+            return interaction;
+        }
+    
+        public void setInteraction(boolean interaction) {
+            this.interaction = interaction;
+        }
 
         public int getX() {
             return x;

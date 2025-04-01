@@ -9,7 +9,7 @@ public class Player extends Entities {
     }
 
     public Player(int x, int y){
-        super("Player", x, y, 0, 0, 59, 100, 
+        super("Player", x, y, 0, 0, 59, 100,
         "assets/player/baseidlel.gif", "assets/player/baseidlel.gif", "assets/player/baseidler.gif", "assets/player/basewalkd.gif", "assets/player/basewalku.gif", "assets/player/basewalkl.gif", "assets/player/basewalkr.gif"
         );
 
@@ -17,13 +17,20 @@ public class Player extends Entities {
     }
     // methods
 
-    public boolean inProximity(Npcs e){
+    public boolean inProximity(Entities e){
+        boolean temp = false;
         
-        if ((e.getX()-100 <= getX()+ getW()&&e.getX()+150 >= getX())&&((e.getY()-20<getY())&&(e.getY()+e.getH()*2+20>getY()+getH()*2))){
-            return true;
+        if ((e.getX()-30 <= getX()+ getW()*2&&(e.getX()+e.getW()*2)+30 >= getX())&&(((e.getY()+e.getH()*2)+30>getY()+getH()*2)&&((e.getY()+e.getH()*2)-30<getY()+getH()*2))){
+            temp = true;
+            System.out.println("there should be a sticker at " + e);
         } else
-        e.setInteraction(false);
-        return false;
+        if (!(e instanceof Player)){
+          e.setInteraction(false); 
+          temp = false; 
+          
+        }
+        return temp;
+        
     }
 
   
@@ -50,15 +57,14 @@ public class Player extends Entities {
         }
         for (int i = 0; i < en.size(); i++) {
             Entities e = en.get(i);
-         if (e instanceof Npcs){
-            Npcs n = (Npcs) e;
+         if (!(e instanceof Player)){
 
             // System.out.println((n.getY()+(n.getH()*2)) + " " + (getY()+getH()));
 
-            if(getY()+getH()*2>n.getY()+n.getH()*2&&en.indexOf(this)<i){
+            if(getY()+getH()*2>e.getY()+e.getH()*2&&en.indexOf(this)<i){
                 
                 Collections.swap(en, en.indexOf(this), i);
-            } else if (getY()+getH()*2<n.getY()+n.getH()*2&&en.indexOf(this)>i){
+            } else if (getY()+getH()*2<e.getY()+e.getH()*2&&en.indexOf(this)>i){
                 // C
                 Collections.swap(en, en.indexOf(this), i);
         
@@ -87,13 +93,13 @@ public class Player extends Entities {
 
     public void Interact(Entities e, ArrayList<Stickers> s){
     Stickers sticker = new Stickers("assets/stickers/eSticker.png", 13, 13);
-    if (e instanceof Npcs){
-        Npcs n = (Npcs) e;
+    if( !(e instanceof Player)){
         // System.out.println(((Npcs) e).isInteraction());
-         if (inProximity(n)&&!(n).isInteraction()){
+         if (inProximity(e)&&!(e).isInteraction()){
+           
         
         s.add(sticker);
-    } else if (!inProximity(n)||(n).isInteraction()){
+    } else if (!inProximity(e)||(e).isInteraction()){
        while (s.size()>1) { 
             s.remove(s.get(1));
        }

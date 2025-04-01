@@ -1,5 +1,4 @@
 
-
 public class Valentino extends Npcs{
 
     public Valentino(){
