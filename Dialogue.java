@@ -127,13 +127,16 @@ public class Dialogue {
                     setcW();
                 } else if (ba.startsWith("AC")){
                     splitAC = (ba.replace("AC ", "")).split("_");
-                    for (int j = 0; j < splitAC.length; j++) {
-                        aCList.add(splitAC[j]);
-                        aChoosing = true;
-                        // System.out.println(aCList.size());
+                    while (aCList.size()<splitAC.length){
+                        for (int j = 0; j < splitAC.length; j++) {
+                            aCList.add(splitAC[j]);
+                            
+                            // System.out.println(aCList.size());
+                        }
+                        sel = 0;
                     }
-                    dialogueList.remove(0);
                     
+                    aChoosing = true;                    
 
                 }   else if (ba.startsWith("EC")){
                     String[] splitEC = (ba.replace("EC", "")).split("_");
@@ -141,7 +144,7 @@ public class Dialogue {
                     while (!ECList.isEmpty()){
                         ECList.remove(0);
                     }
-                    
+
                     while (ECList.size()<splitEC.length){
                         for (int l = 0; l < splitEC.length; l++) {
                             ECList.add(splitEC[l]);
@@ -162,10 +165,7 @@ public class Dialogue {
                         inter.remove(1);
                     }                             
                     aChoosing = false; 
-                } else if (ba.equals(" ")){
-                    cDialogue = cDialogue;
-                    
-                }
+                } 
                 }
 
                
@@ -304,10 +304,10 @@ public class Dialogue {
     }
 
     public void setSel(int se) {
-        if (se>=3){
+        if (se>=aCList.size()){
             se = 0;
         }else if (se<=-1){
-            se = 2;
+            se = aCList.size()-1;
         }
         this.sel = se;
         
