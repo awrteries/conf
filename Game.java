@@ -199,35 +199,51 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		key= e.getKeyCode();
 		System.out.println(key);
 
+				if (!testDialogue.isaChoosing()){
+					if (key == 68 || key == 39){ // D
+						player.setDx(2);
+						player.setDy(0);
+						player.setW(51);
+						player.setSprite(player.getWalkR());
+						
+					} 
+					else if (key == 65 || key == 37){ // A
+						player.setDx(-2);
+						player.setDy(0);
+						player.setW(51);
+						player.setSprite(player.getWalkL());
+						
+					}
+					else if (key == 87 || key == 38) { // W
+						player.setDy(-2);
+						player.setDx(0);
+						player.setW(56);
+						player.setSprite(player.getWalkU());
+					}
+					else if (key == 83 || key == 40){ // S
+						player.setDy(2);
+						player.setDx(0);
+						player.setW(56);
+						player.setSprite(player.getWalkD());
+					}
+				} else if (testDialogue.isaChoosing()) {
+					
+					if (key == 83 || key == 40){ // S
+						testDialogue.setSel(testDialogue.getSel()+1);
+						
+					} 
+					else if (key == 87 || key == 38) { // W
+						testDialogue.setSel(testDialogue.getSel()-1);
+						
+					}
+				}
+			
+
+
 
 
 		// player movement
-		if (key == 68){ // D
-			player.setDx(2);
-			player.setDy(0);
-			player.setW(51);
-			player.setSprite(player.getWalkR());
-			
-		} 
-		else if (key == 65){ // A
-			player.setDx(-2);
-			player.setDy(0);
-			player.setW(51);
-			player.setSprite(player.getWalkL());
-			
-		}
-		else if (key == 87) { // W
-			player.setDy(-2);
-			player.setDx(0);
-			player.setW(56);
-			player.setSprite(player.getWalkU());
-		}
-		else if (key == 83){ // S
-			player.setDy(2);
-			player.setDx(0);
-			player.setW(56);
-			player.setSprite(player.getWalkD());
-		}
+		
 
 		if (key == 32){ // [SPACE]	
 			ArrayList<String> dl = testDialogue.getDialogueList();
@@ -266,25 +282,29 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public void keyReleased(KeyEvent e) {
 		
 		// player movement
-		if (key == 68){ // D
-			player.setDx(0);
-			player.setW(59);
-			player.setSprite(player.getIdleR());
-			
 
-		} 
-		else if (key == 65){ // A
-			player.setDx(0);
-			player.setW(59);
-			player.setSprite(player.getIdleL());
-			
+		if (!testDialogue.isaChoosing()){
+			if (key == 68 || key == 37){ // D
+				player.setDx(0);
+				player.setW(59);
+				player.setSprite(player.getIdleR());
+				
+	
+			} 
+			else if (key == 65 || key == 39){ // A
+				player.setDx(0);
+				player.setW(59);
+				player.setSprite(player.getIdleL());
+				
+			}
+			else if (key == 87 || key == 83 || key == 38 || key == 40) { // W, S
+				player.setDy(0);
+				player.setW(59);
+				player.setSprite(player.getIdleL());
+	
+			}
 		}
-		else if (key == 87 || key == 83) { // W, S
-			player.setDy(0);
-			player.setW(59);
-			player.setSprite(player.getIdleL());
-
-		}
+		
 
 		if (key == 32){ // [SPACE]	
 			ArrayList<String> dl = testDialogue.getDialogueList();

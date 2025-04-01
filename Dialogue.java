@@ -14,8 +14,11 @@ public class Dialogue {
     private String dialogueFile, dialogueDesc, cDialogue, removeSubStr, cWord, dInstruction;
     private String[] splitAC;
     private Entities speaker;
-    private ArrayList<String> dialogueList, cWList, aCList;
+    private ArrayList<String> dialogueList, cWList, aCList, ECList;
     private ArrayList<Interface> inter;
+    private int sel;
+    private boolean aChoosing;
+    
 
     // private ArrayList<Interface> 
 
@@ -32,15 +35,25 @@ public class Dialogue {
         cWList = new ArrayList<String>();
         aCList = new ArrayList<String>();
         aCList.add("");
+        ECList = new ArrayList<String>();
         inter = new ArrayList<Interface>();
         inter.add(new Interface("assets/boxes/silverdbox.png", 400, 580, 350, 108));
         splitAC = "".split("");
         dInstruction = "press [SPACE] to continue.";
+        sel = 0;
+        aChoosing = false;
+        
+        
 
 
     }
 
     // methods
+
+    // public void aSelection(){
+    //     for
+    // }
+
     public void changeInter (){
         int iy = 596;
         if (aCList.size()>1){
@@ -86,6 +99,12 @@ public class Dialogue {
         g2d.setFont(new Font("Jersey 10", Font.PLAIN, 25)); 
         int iy = 635;
         for (int i = 1; i < aCList.size(); i++) {
+
+            if (i-1==sel){
+                g2d.setColor(Color.red);
+            } else {
+                g2d.setColor(Color.white);
+            }
             g2d.drawString(aCList.get(i), 1130, iy);
             iy += 68;
         }
@@ -111,11 +130,40 @@ public class Dialogue {
                     splitAC = (ba.replace("AC ", "")).split("_");
                     for (int j = 0; j < splitAC.length; j++) {
                         aCList.add(splitAC[j]);
+                        aChoosing = true;
                         // System.out.println(aCList.size());
                     }
                     dialogueList.remove(0);
                     
 
+                }   else if (ba.startsWith("EC")){
+                    String[] splitEC = (ba.replace("EC", "")).split("_");
+                    
+                    while (ECList.size()<splitEC.length){
+                        for (int l = 0; l < splitEC.length; l++) {
+                            ECList.add(splitEC[l]);
+                        } 
+                    }   
+                    System.out.println(ECList.size());               
+                    for (int h = 0; h < ECList.size(); h++) {
+                        if (ECList.get(h).startsWith(entity.getName())){
+                            speaker = entity;
+                            removeSubStr = speaker.getName();
+                            cDialogue = ECList.get(sel).replace(removeSubStr, "");
+                        } 
+                    }    
+                    while (!aCList.isEmpty()){
+                        aCList.remove(0);   
+                    }
+                    while (inter.size()>1){
+                        inter.remove(1);
+                    }                             
+                    aChoosing = false; 
+                } else if (ba.equals(" ")){
+                    cDialogue = cDialogue;
+                    while (!ECList.isEmpty()){
+                        ECList.remove(0);
+                    }
                 }
                 }
 
@@ -161,12 +209,6 @@ public class Dialogue {
                 sx += wordWidth + wordSpacing; 
         }
     }
-
-    // public ArrayList<String> setcWList(){
-    //     ArrayList<String> temp = new ArrayList<String>();
-
-    //     return temp;
-    // }
 
     public ArrayList<String> setDialogue(){
         ArrayList<String> temp = new ArrayList<String>();
@@ -240,6 +282,36 @@ public class Dialogue {
         return cWord;
     }
 
+    public ArrayList<String> getaCList() {
+        return aCList;
+    }
+
+    public void setaCList(ArrayList<String> aCList) {
+        this.aCList = aCList;
+    }
+
+    public ArrayList<Interface> getInter() {
+        return inter;
+    }
+
+    public void setInter(ArrayList<Interface> inter) {
+        this.inter = inter;
+    }
+
+    public int getSel() {
+        return sel;
+    }
+
+    public void setSel(int se) {
+        if (se>=3){
+            se = 0;
+        }else if (se<=-1){
+            se = 2;
+        }
+        this.sel = se;
+        
+    }
+
     public void setcWord(String cWord) {
         this.cWord = cWord;
     }
@@ -254,6 +326,14 @@ public class Dialogue {
 
     public void setcWList(ArrayList<String> cWList) {
         this.cWList = cWList;
+    }
+
+    public boolean isaChoosing() {
+        return aChoosing;
+    }
+
+    public void setaChoosing(boolean aChoosing) {
+        this.aChoosing = aChoosing;
     }
 
 
