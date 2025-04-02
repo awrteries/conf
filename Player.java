@@ -98,14 +98,15 @@ public class Player extends Entities {
 
     public boolean inProximity(Entities e){
         boolean temp = false;
-        
+
+        if (!(e instanceof Player)){
         if ((e.getX()-30 <= getX()+ getW()*2&&(e.getX()+e.getW()*2)+30 >= getX())&&(((e.getY()+e.getH()*2)+30>getY()+getH()*2)&&((e.getY()+e.getH()*2)-30<getY()+getH()*2))){
             temp = true;
-        } else
-        if (!(e instanceof Player)){
+        } else if (!((e.getX()-30 <= getX()+ getW()*2&&(e.getX()+e.getW()*2)+30 >= getX())&&(((e.getY()+e.getH()*2)+30>getY()+getH()*2)&&((e.getY()+e.getH()*2)-30<getY()+getH()*2)))){
+        
           e.setInteraction(false); 
           temp = false; 
-          
+        }
         }
         return temp;
         

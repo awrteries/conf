@@ -152,7 +152,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			
 
 			if (!(npc instanceof Player)){
-				System.out.println(npc.isInteraction());
+				// System.out.println( npc.getName() + " " + npc.isInteraction());
 				player.Interact(npc, stickers);
 				if (npc.isInteraction()){
 
@@ -171,7 +171,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 				if (npc instanceof Items){
 					((Items) npc).inv(player.getInventory(), active);
-					System.out.println(player.getInventory());
+					// System.out.println(player.getInventory());
 				}
 			}
 			
