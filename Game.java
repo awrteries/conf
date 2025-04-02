@@ -20,6 +20,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private CBox box; 
 	private ArrayList <Entities> speakable, active;
 	private ArrayList<Stickers> stickers;
+	private ArrayList<Interface> inter;
 	private Dialogue testDialogue;
 
 
@@ -43,6 +44,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		stickers = setStickers();
 		testDialogue = new Dialogue();
 		testDialogue.setDialogueList();	
+		inter = setInter();
 	}
 
 	// setting arraylists
@@ -70,7 +72,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	}
 	public ArrayList<Interface> setInter(){
 		ArrayList<Interface> temp = new ArrayList<Interface>();
-		temp.add(new Interface());
+        temp.add(new Interface("assets/boxes/silverdbox.png", 400, 580, 350, 108));
+
 		return temp;
 	}
 	
@@ -130,29 +133,60 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public void drawSprites(Graphics g2d){
 		// player.drawEntity(g2d);
 		player.Move(active);
+		Interface minter = inter.get(0);
 
 		// drawing sprites and setting dialogue
+		
 
+		for (int l = 0; l < inter.size(); l++) {
+				
+	
+			Interface in = inter.get(l);
+			in.drawInterface(g2d);	
+
+		
+	}
+		
 		for (int i = 0; i < active.size(); i++) {
 			Entities npc = active.get(i);
+
+		
 			npc.drawEntity(g2d);
+
+			
+
+			
 			
 
 			if (!(npc instanceof Player)){
+				System.out.println(npc.isInteraction());
 				player.Interact(npc, stickers);
-				if (npc.isInteraction()){for (int j = 0; j < stickers.size(); j++) {
+				if (npc.isInteraction()){
+				minter.setPic("assets/boxes/silverdbox.png");
+				minter.setH(108);
+				for (int j = 0; j < stickers.size(); j++) {
 				Stickers s = stickers.get(j);
 				s.Move(npc);	
 				s.drawSticker(g2d);
+
+				if (npc instanceof Items){
+					((Items) npc).inv(player.getInventory(), active);
+					System.out.println(player.getInventory());
+				}
 			}
 			
-					testDialogue.runDialogue(active);
+					testDialogue.runDialogue(active, inter);
 					if (testDialogue.getDialogueList().size()>1){
 	
 						
 						testDialogue.drawDialogue(g2d);
 					
 				}
+				} else if (!npc.isInteraction()){
+					minter.setPic("assets/boxes/invbox.png");
+					minter.setH(62);
+	
+	
 				}
 
 				for (int j = 0; j < stickers.size(); j++) {
@@ -161,11 +195,12 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 					s.drawSticker(g2d);
 				}
 				
-			}
+			} 
 			
 		}
 
 		// drawing the interface
+		
 		
 		
 		
@@ -305,7 +340,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		if (key == 32){ // [SPACE]	
 			ArrayList<String> dl = testDialogue.getDialogueList();
 			testDialogue.setcW();
-			testDialogue.changeInter();
+			testDialogue.changeInter(inter);
 		
 		}
 		if (key ==69){ // E

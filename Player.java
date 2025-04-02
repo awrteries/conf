@@ -3,7 +3,7 @@ import java.util.Collections;
 
 public class Player extends Entities {
 
-
+    private ArrayList<Items> inventory;
     public Player(){
         super();
     }
@@ -12,27 +12,12 @@ public class Player extends Entities {
         super("Player", x, y, 0, 0, 59, 100,
         "assets/player/baseidlel.gif", "assets/player/baseidlel.gif", "assets/player/baseidler.gif", "assets/player/basewalkd.gif", "assets/player/basewalku.gif", "assets/player/basewalkl.gif", "assets/player/basewalkr.gif"
         );
+        inventory = new ArrayList<Items>();
 
         
     }
     // methods
 
-    public boolean inProximity(Entities e){
-        boolean temp = false;
-        
-        if ((e.getX()-30 <= getX()+ getW()*2&&(e.getX()+e.getW()*2)+30 >= getX())&&(((e.getY()+e.getH()*2)+30>getY()+getH()*2)&&((e.getY()+e.getH()*2)-30<getY()+getH()*2))){
-            temp = true;
-        } else
-        if (!(e instanceof Player)){
-          e.setInteraction(false); 
-          temp = false; 
-          
-        }
-        return temp;
-        
-    }
-
-  
 
     public void Move(ArrayList<Entities> en){
         super.moveEntity();
@@ -110,5 +95,34 @@ public class Player extends Entities {
   
 
     }
+
+    public boolean inProximity(Entities e){
+        boolean temp = false;
+        
+        if ((e.getX()-30 <= getX()+ getW()*2&&(e.getX()+e.getW()*2)+30 >= getX())&&(((e.getY()+e.getH()*2)+30>getY()+getH()*2)&&((e.getY()+e.getH()*2)-30<getY()+getH()*2))){
+            temp = true;
+        } else
+        if (!(e instanceof Player)){
+          e.setInteraction(false); 
+          temp = false; 
+          
+        }
+        return temp;
+        
+    }
+
+  
+
+    // getters and setters
+
+    public ArrayList<Items> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(ArrayList<Items> inventory) {
+        this.inventory = inventory;
+    }
+
+    
 
 }
