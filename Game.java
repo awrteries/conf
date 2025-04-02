@@ -145,6 +145,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				s.Move(npc);	
 				s.drawSticker(g2d);
 			}
+			
 					testDialogue.runDialogue(active);
 					if (testDialogue.getDialogueList().size()>1){
 	
@@ -256,10 +257,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		if (key ==69){ // E
 			for (int i = 0; i < active.size(); i++) {
 				Entities en = active.get(i);
-
+				
+				(en).setInteraction(true);
 				if(en instanceof Npcs){
 					if (player.inProximity((Npcs)en)){
-						((Npcs) en).setInteraction(true);
 						testDialogue=((Npcs) en).getcDialogue();
 						testDialogue.setDialogueList();
 						testDialogue.setcW();

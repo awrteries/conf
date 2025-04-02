@@ -22,7 +22,6 @@ public class Player extends Entities {
         
         if ((e.getX()-30 <= getX()+ getW()*2&&(e.getX()+e.getW()*2)+30 >= getX())&&(((e.getY()+e.getH()*2)+30>getY()+getH()*2)&&((e.getY()+e.getH()*2)-30<getY()+getH()*2))){
             temp = true;
-            System.out.println("there should be a sticker at " + e);
         } else
         if (!(e instanceof Player)){
           e.setInteraction(false); 
