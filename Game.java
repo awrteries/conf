@@ -22,6 +22,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private ArrayList<Stickers> stickers;
 	private ArrayList<Interface> inter;
 	private Dialogue testDialogue;
+	private boolean raction;
 
 
 
@@ -45,6 +46,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		testDialogue = new Dialogue();
 		testDialogue.setDialogueList();	
 		inter = setInter();
+		raction = false;
 	}
 
 	// setting arraylists
@@ -115,8 +117,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		// Get the FontMetrics for the current font
 		FontMetrics fm = g2d.getFontMetrics();
 		
-
+		raction = Interaction();
+		System.out.println(raction);
 		drawSprites(g2d);
+		// System.out.println(raction);
 		// testDialogue.runDialogue(speakable);
 		// if (testDialogue.getDialogueList().size()>1){
 		// 	g2d.drawString(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue(), 200, 200);
@@ -147,23 +151,16 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			npc.drawEntity(g2d);
 
 			
-
+			
 			
 			
 
 			if (!(npc instanceof Player)){
-				// System.out.println( npc.getName() + " " + npc.isInteraction());
+				
 				player.Interact(npc, stickers);
 				if (npc.isInteraction()){
 
-					for (int l = 0; l < inter.size(); l++) {
-				
-	
-						Interface in = inter.get(l);
-						in.drawInterface(g2d);	
-			
 					
-				}
 				for (int j = 0; j < stickers.size(); j++) {
 				Stickers s = stickers.get(j);
 				s.Move(npc);	
@@ -175,13 +172,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				}
 			}
 			
-					testDialogue.runDialogue(active, inter);
-					if (testDialogue.getDialogueList().size()>1){
-	
-						
-						testDialogue.drawDialogue(g2d);
-					
-				}
 				} else if (!npc.isInteraction()){
 	
 				}
@@ -197,17 +187,53 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		}
 
 		// drawing the interface
+
+		if (raction){
+			for (int l = 0; l < inter.size(); l++) {
+				
+	
+				Interface in = inter.get(l);
+				in.drawInterface(g2d);	
+		}
+
+
+		testDialogue.runDialogue(active, inter);
+		if (testDialogue.getDialogueList().size()>1){
+
+			
+			testDialogue.drawDialogue(g2d);
+		
+	}
+			
+		}
 		
 		
 		
 		
 		
 	}
-	
 
 	
 
+	public boolean Interaction(){
+		boolean temp = false;
+		
+		for (int i = 0; i < active.size(); i++) {
+			// System.out.println( active.get(i).getName() + " " + active.get(i).isInteraction());
 
+			if (!(active.get(i) instanceof Player)){
+				if ((active.get(i).isInteraction())){
+					// System.out.println("should be true");
+					temp = true;
+					return temp;
+				} else {
+					temp = false;				 
+				} 
+			}
+		}
+
+		return temp;
+	}
 
 	//DO NOT DELETE
 	@Override
