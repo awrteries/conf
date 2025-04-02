@@ -138,14 +138,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		// drawing sprites and setting dialogue
 		
 
-		for (int l = 0; l < inter.size(); l++) {
-				
-	
-			Interface in = inter.get(l);
-			in.drawInterface(g2d);	
-
 		
-	}
 		
 		for (int i = 0; i < active.size(); i++) {
 			Entities npc = active.get(i);
@@ -162,8 +155,15 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				System.out.println(npc.isInteraction());
 				player.Interact(npc, stickers);
 				if (npc.isInteraction()){
-				minter.setPic("assets/boxes/silverdbox.png");
-				minter.setH(108);
+
+					for (int l = 0; l < inter.size(); l++) {
+				
+	
+						Interface in = inter.get(l);
+						in.drawInterface(g2d);	
+			
+					
+				}
 				for (int j = 0; j < stickers.size(); j++) {
 				Stickers s = stickers.get(j);
 				s.Move(npc);	
@@ -183,9 +183,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 					
 				}
 				} else if (!npc.isInteraction()){
-					minter.setPic("assets/boxes/invbox.png");
-					minter.setH(62);
-	
 	
 				}
 
