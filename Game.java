@@ -187,35 +187,39 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		}
 
 		// drawing the interface
-
-		if (raction){
-			for (int l = 0; l < inter.size(); l++) {
+		for (int l = 0; l < inter.size(); l++) {
 				
 	
-				Interface in = inter.get(l);
-				in.drawInterface(g2d);	
+			Interface in = inter.get(l);
+			in.drawInterface(g2d);	
 		}
 
+		Interface bottomBox = inter.get(0);
+		if (raction){ // checking if any of the sprites are having an interaction
+			
+			bottomBox.setPic("assets/boxes/silverdbox.png"); // sets the image to the dialogue box
+			bottomBox.setH(108);
 
-		testDialogue.runDialogue(active, inter);
+
+		testDialogue.runDialogue(active, inter); // dialogue idk i forgot
 		if (testDialogue.getDialogueList().size()>1){
 
 			
 			testDialogue.drawDialogue(g2d);
 		
-	}
-			
 		}
-		
-		
-		
-		
+			
+		} else if (!raction){
+			bottomBox.setPic("assets/boxes/invbox.png"); // sets the image to the inventory box
+			bottomBox.setH(62);
+		}
+			
 		
 	}
 
 	
 
-	public boolean Interaction(){
+	public boolean Interaction(){ // i love this code
 		boolean temp = false;
 		
 		for (int i = 0; i < active.size(); i++) {
