@@ -15,7 +15,6 @@ public class Dialogue {
     private String[] splitAC;
     private Entities speaker;
     private ArrayList<String> dialogueList, cWList, aCList, ECList;
-    private ArrayList<Interface> inter;
     private int sel;
     private boolean aChoosing;
     
@@ -35,8 +34,6 @@ public class Dialogue {
         cWList = new ArrayList<String>();
         aCList = new ArrayList<String>();
         ECList = new ArrayList<String>();
-        inter = new ArrayList<Interface>();
-        inter.add(new Interface("assets/boxes/silverdbox.png", 400, 580, 350, 108));
         splitAC = "".split("");
         dInstruction = "press [SPACE] to continue.";
         sel = 0;
@@ -53,7 +50,7 @@ public class Dialogue {
     //     for
     // }
 
-    public void changeInter (){
+    public void changeInter (ArrayList<Interface> inter){
         int iy = 596;
         if (aCList.size()>0){
             for (int j = 0; j < aCList.size() ; j++) {
@@ -71,14 +68,7 @@ public class Dialogue {
     }
 
     public void drawDialogue(Graphics g2d){
-        for (int i = 0; i < inter.size(); i++) {
-            Interface in = inter.get(i);
-            in.drawInterface(g2d);
 
-            
-
-            
-        }
             g2d.setFont(new Font("Jersey 10", Font.PLAIN, 35));
 			g2d.drawString(getSpeaker().getName(), 420, 612);
 			g2d.setColor(Color.white);
@@ -109,7 +99,7 @@ public class Dialogue {
         }
     }
 
-    public void runDialogue(ArrayList<Entities> entities){
+    public void runDialogue(ArrayList<Entities> entities, ArrayList<Interface> inter){
 
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i) instanceof Player || entities.get(i) instanceof Npcs) {
@@ -168,6 +158,8 @@ public class Dialogue {
                             }                             
                             aChoosing = false; 
                         // } 
+                        } else if (ba.equals("[STOP]")){
+                            entities.get(i).setInteraction(false);
                         }
         
                        
@@ -297,13 +289,13 @@ public class Dialogue {
         this.aCList = aCList;
     }
 
-    public ArrayList<Interface> getInter() {
-        return inter;
-    }
+    // public ArrayList<Interface> getInter() {
+    //     return inter;
+    // }
 
-    public void setInter(ArrayList<Interface> inter) {
-        this.inter = inter;
-    }
+    // public void setInter(ArrayList<Interface> inter) {
+    //     this.inter = inter;
+    // }
 
     public int getSel() {
         return sel;
