@@ -149,7 +149,7 @@ public class Dialogue {
                                 } 
                             }   
                             System.out.println(ECList.get(sel));
-                            runDialogue(entities, inter, ECList.get(0), player);
+                            runDialogue(entities, inter, ECList.get(sel), player);
                             // System.out.println(ECList.size());               
                             // for (int h = 0; h < ECList.size(); h++) {
                             //     if (ECList.get(h).startsWith(entity.getName())){
@@ -159,12 +159,15 @@ public class Dialogue {
                             //     } 
                                 
                             // }    
-                            while (!aCList.isEmpty()){
-                                aCList.remove(0);   
+                            if (!aChoosing){
+                                while (!aCList.isEmpty()){
+                                    aCList.remove(0);   
+                                }
+                                while (inter.size()>1){
+                                    inter.remove(1);
+                                }       
                             }
-                            while (inter.size()>1){
-                                inter.remove(1);
-                            }                             
+                                                  
                             aChoosing = false; 
                         // } 
                         } else if (ba.equals("[STOP]")){
