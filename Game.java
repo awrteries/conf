@@ -17,7 +17,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private Valentino val;
 	private Blythe blythe;
 	private Lien peng;
-	private CBox box; 
+	// private CBox box; 
 	private ArrayList <Entities> speakable, active;
 	private ArrayList<Stickers> stickers;
 	private ArrayList<Interface> inter;
@@ -40,7 +40,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		val = new Valentino(800, 300);
 		blythe = new Blythe(1000,310);
 		peng = new Lien(200, 400);
-		box = new CBox(800,200);
+		// box = new CBox(800,200);
 		active = setActive();
 		stickers = setStickers();
 		testDialogue = new Dialogue();
@@ -56,12 +56,19 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public ArrayList<Entities> setActive(){
 		ArrayList<Entities> temp = new ArrayList<Entities>();		
 		
-		temp.add(val);
 		temp.add(player);
+		
+		// npcs
+		temp.add(val);
 		temp.add(fern);
 		temp.add(peng);
 		temp.add(blythe);
-		temp.add(box);
+
+
+		// items
+		temp.add(new CBox(100, 200));
+		temp.add(new CBox(800, 700));
+		temp.add(new CBox(400,600));
 		
 		
 		return temp;
@@ -74,7 +81,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	}
 	public ArrayList<Interface> setInter(){
 		ArrayList<Interface> temp = new ArrayList<Interface>();
-        temp.add(new Interface("assets/boxes/silverdbox.png", 400, 580, 350, 108));
+        temp.add(new Interface("assets/boxes/invbox.png", 400, 672, 350, 108));
 
 		return temp;
 	}
@@ -118,14 +125,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		FontMetrics fm = g2d.getFontMetrics();
 		
 		raction = Interaction();
-		System.out.println(raction);
 		drawSprites(g2d);
-		// System.out.println(raction);
-		// testDialogue.runDialogue(speakable);
-		// if (testDialogue.getDialogueList().size()>1){
-		// 	g2d.drawString(testDialogue.getSpeaker().getName() + ": "+testDialogue.getcDialogue(), 200, 200);
-
-		// }
 
 	
 		twoDgraph.drawImage(back, null, 0, 0);
@@ -166,9 +166,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				s.Move(npc);	
 				s.drawSticker(g2d);
 
-				if (npc instanceof Items){
+				if (npc instanceof Items){ // you can delete this later, this is just a check to see if the appending in the inv works
 					((Items) npc).inv(player.getInventory(), active);
-					// System.out.println(player.getInventory());
+					System.out.println(player.getInventory());
 				}
 			}
 			
@@ -199,6 +199,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			
 			bottomBox.setPic("assets/boxes/silverdbox.png"); // sets the image to the dialogue box
 			bottomBox.setH(108);
+			bottomBox.setY(580);
 
 
 		testDialogue.runDialogue(active, inter); // dialogue idk i forgot
@@ -212,9 +213,25 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		} else if (!raction){
 			bottomBox.setPic("assets/boxes/invbox.png"); // sets the image to the inventory box
 			bottomBox.setH(62);
+			bottomBox.setY(672);
+
+			drawItems(g2d);
 		}
 			
 		
+	}
+
+
+	public void drawItems(Graphics g2d){
+		ArrayList<Items> temp = player.getInventory();
+		int sX = 466;
+		
+		if (!(temp == null)){
+				for (int i = 0; i < temp.size(); i++) {
+					temp.get(i).drawItems(g2d, sX-temp.get(i).getW(), 735-temp.get(i).getH());
+					sX += 142;
+			}
+		}
 	}
 
 	
@@ -225,7 +242,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		for (int i = 0; i < active.size(); i++) {
 			// System.out.println( active.get(i).getName() + " " + active.get(i).isInteraction());
 
-			if (!(active.get(i) instanceof Player)){
+			if ((active.get(i) instanceof Npcs)){
 				if ((active.get(i).isInteraction())){
 					// System.out.println("should be true");
 					temp = true;
