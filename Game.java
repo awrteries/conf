@@ -11,7 +11,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 	
 	private BufferedImage back; 
-	private int key, x, y; 
+	private int key, x, y, invsel; 
 	private Player player;
 	private Fern fern;
 	private Valentino val;
@@ -47,6 +47,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		testDialogue.setDialogueList();	
 		inter = setInter();
 		raction = false;
+		invsel = 0;
 	}
 
 	// setting arraylists
@@ -168,7 +169,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 				if (npc instanceof Items){ // you can delete this later, this is just a check to see if the appending in the inv works
 					((Items) npc).inv(player.getInventory(), active);
-					System.out.println(player.getInventory());
+					
 				}
 			}
 			
@@ -185,6 +186,17 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			} 
 			
 		}
+
+		if (!(player.getInventory()==null)){ // inventory selection
+						for (int l = 0; l < player.getInventory().size(); l++) {
+							player.getInventory().get(l).invSel(player.getInventory(), invsel);
+						}	
+						}
+					
+					System.out.println(player.getInventory());
+
+		
+		
 
 		// drawing the interface
 		for (int l = 0; l < inter.size(); l++) {
@@ -347,6 +359,16 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 					}
 				}
 			}
+		}
+
+		for (int i = 49; i < 54; i++) { // checking for 1, 2, 3, 4, 5
+			char c = (char) i;
+			int num = c - '0';
+
+			if (key == i){
+				invsel = num-1;
+			}
+			
 		}
 	
 	}

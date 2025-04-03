@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 public class Items extends Entities{
 
     private String thumbnail, selected, ground;
+    // private boolean isselected;
     public Items(){
         super();
     }
@@ -33,6 +34,22 @@ public class Items extends Entities{
             }
             
         }
+    }
+
+    public void invSel(ArrayList<Items> item, int sel){
+        System.out.println(isInteraction());
+        if (!(item==null)){
+
+            
+          if (item.indexOf(this)==sel){
+            setSprite(selected);
+            setInteraction(true);
+         } else {
+            setSprite(thumbnail);
+            setInteraction(false);
+         }  
+        }
+        
     }
     
     public void drawItems(Graphics g2d, int x1, int y1){
