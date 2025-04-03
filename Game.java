@@ -189,11 +189,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 		if (!(player.getInventory()==null)){ // inventory selection
 						for (int l = 0; l < player.getInventory().size(); l++) {
-							player.getInventory().get(l).invSel(player.getInventory(), invsel);
+							player.getInventory().get(l).invSel(player.getInventory(), invsel, active, player);
 						}	
 						}
 					
-					System.out.println(player.getInventory());
+					// System.out.println(player.getInventory());
 
 		
 		
@@ -369,6 +369,18 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				invsel = num-1;
 			}
 			
+		}
+
+		if (key == 8){
+			if (!(player.getInventory()==null)){
+			for (int i = 0; i < player.getInventory().size(); i++) {
+				if (invsel==i){
+					player.getInventory().get(i).setInteraction(true);
+					System.out.println("happening");
+
+				}
+			}
+		}
 		}
 	
 	}
