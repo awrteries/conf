@@ -99,7 +99,7 @@ public class Dialogue {
         }
     }
 
-    public void runDialogue(ArrayList<Entities> entities, ArrayList<Interface> inter){
+    public void runDialogue(ArrayList<Entities> entities, ArrayList<Interface> inter, String ba){
 
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i) instanceof Player || entities.get(i) instanceof Npcs) {
@@ -110,7 +110,7 @@ public class Dialogue {
                 } else {
                     // for (int i = 0; i < entities.size(); i++) {
                         Entities entity = entities.get(i);
-                        String ba = dialogueList.get(0);
+                        // String ba = dialogueList.get(0);
         
                         if (ba.startsWith(entity.getName())){ // if the dialogue starts with a character's name the program will set the current speaker to that character
                             speaker = entity;
@@ -118,6 +118,8 @@ public class Dialogue {
                             cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue 
                             setcW();
                         } else if (ba.startsWith("AC")){
+                            System.out.println( "should be" + cDialogue);
+
                             splitAC = (ba.replace("AC ", "")).split("_");
                             while (aCList.size()<splitAC.length){
                                 for (int l = 0; l < splitAC.length; l++) {
@@ -131,7 +133,7 @@ public class Dialogue {
                             aChoosing = true;                    
         
                         }   else if (ba.startsWith("EC")){
-                            String[] splitEC = (ba.replace("EC", "")).split("_");
+                            String[] splitEC = (ba.replace("EC ", "")).split("_");
                             
                             while (!ECList.isEmpty()){
                                 ECList.remove(0);
@@ -142,14 +144,17 @@ public class Dialogue {
                                     ECList.add(splitEC[l]);
                                 } 
                             }   
+                            System.out.println(ECList.get(sel));
+                            runDialogue(entities, inter, ECList.get(0));
                             // System.out.println(ECList.size());               
-                            for (int h = 0; h < ECList.size(); h++) {
-                                if (ECList.get(h).startsWith(entity.getName())){
-                                    speaker = entity;
-                                    removeSubStr = speaker.getName();
-                                    cDialogue = ECList.get(sel).replace(removeSubStr, "");
-                                } 
-                            }    
+                            // for (int h = 0; h < ECList.size(); h++) {
+                            //     if (ECList.get(h).startsWith(entity.getName())){
+                            //         speaker = entity;
+                            //         removeSubStr = speaker.getName();
+                            //         cDialogue = ECList.get(sel).replace(removeSubStr, "");
+                            //     } 
+                                
+                            // }    
                             while (!aCList.isEmpty()){
                                 aCList.remove(0);   
                             }

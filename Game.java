@@ -214,7 +214,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			bottomBox.setY(580);
 
 
-		testDialogue.runDialogue(active, inter); // dialogue idk i forgot
+		testDialogue.runDialogue(active, inter, testDialogue.getDialogueList().get(0)); // dialogue idk i forgot
 		if (testDialogue.getDialogueList().size()>1){
 
 			
