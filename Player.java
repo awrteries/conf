@@ -61,7 +61,7 @@ public class Player extends Entities {
 
     public void eyeContact(Npcs n){
 
-        if (inProximity(n)){
+        // if (inProximity(n)){
           if (this.getX()<n.getX()){
             n.setSprite(n.getIdleL());
             setSprite(getIdleR());
@@ -69,7 +69,7 @@ public class Player extends Entities {
             n.setSprite(n.getIdleR());
             setSprite(getIdleL());
         }     
-        }
+        // }
       
         
         

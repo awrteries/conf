@@ -214,7 +214,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			bottomBox.setY(580);
 
 
-		testDialogue.runDialogue(active, inter, testDialogue.getDialogueList().get(0)); // dialogue idk i forgot
+		testDialogue.runDialogue(active, inter, testDialogue.getDialogueList().get(0), player); // dialogue idk i forgot
 		if (testDialogue.getDialogueList().size()>1){
 
 			
@@ -355,7 +355,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 						testDialogue=((Npcs) en).getcDialogue();
 						testDialogue.setDialogueList();
 						testDialogue.setcW();
-						player.eyeContact((Npcs)en);
+						// player.eyeContact((Npcs)en);
 					}
 				}
 			}
@@ -426,7 +426,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				Entities en = active.get(i);
 
 				if(en instanceof Npcs){
-					player.eyeContact((Npcs)en);
+					// player.eyeContact((Npcs)en);
 				}
 			}
 		

@@ -99,7 +99,7 @@ public class Dialogue {
         }
     }
 
-    public void runDialogue(ArrayList<Entities> entities, ArrayList<Interface> inter, String ba){
+    public void runDialogue(ArrayList<Entities> entities, ArrayList<Interface> inter, String ba, Player player){
 
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i) instanceof Player || entities.get(i) instanceof Npcs) {
@@ -114,9 +114,13 @@ public class Dialogue {
         
                         if (ba.startsWith(entity.getName())){ // if the dialogue starts with a character's name the program will set the current speaker to that character
                             speaker = entity;
+                            if (speaker instanceof Npcs){
+                                player.eyeContact((Npcs)entity);
+                            }
                             removeSubStr = speaker.getName();
                             cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue 
                             setcW();
+                            
                         } else if (ba.startsWith("AC")){
                             System.out.println( "should be" + cDialogue);
 
@@ -145,7 +149,7 @@ public class Dialogue {
                                 } 
                             }   
                             System.out.println(ECList.get(sel));
-                            runDialogue(entities, inter, ECList.get(0));
+                            runDialogue(entities, inter, ECList.get(0), player);
                             // System.out.println(ECList.size());               
                             // for (int h = 0; h < ECList.size(); h++) {
                             //     if (ECList.get(h).startsWith(entity.getName())){
