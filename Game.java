@@ -60,12 +60,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		temp.add(player);
 		
 		// npcs
-		temp.add(val);
-		temp.add(fern);
-		temp.add(peng);
-		temp.add(blythe);
-
-
+		
 		// items
 		temp.add(new CBox(100, 200));
 		temp.add(new CBox(800, 700));
