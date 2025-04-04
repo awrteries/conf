@@ -64,10 +64,8 @@ public class Player extends Entities {
         // if (inProximity(n)){
           if (this.getX()<n.getX()){
             n.setSprite(n.getIdleL());
-            setSprite(getIdleR());
         }else if(this.getX()>n.getX()+n.getW()){
             n.setSprite(n.getIdleR());
-            setSprite(getIdleL());
         }     
         // }
       
