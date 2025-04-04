@@ -285,6 +285,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 		key= e.getKeyCode();
 		System.out.println(key);
+		System.out.println(testDialogue.isaChoosing());
 
 				if (!testDialogue.isaChoosing()){
 					if (key == 68 || key == 39){ // D
