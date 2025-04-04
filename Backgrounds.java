@@ -1,0 +1,95 @@
+import java.awt.Graphics;
+import javax.swing.ImageIcon;
+
+public class Backgrounds {
+
+    int x, y, dx, dy, w, h;
+    String pic, fpic;
+
+
+    public Backgrounds(){
+
+    }
+
+    public Backgrounds(String p, String f,int x1, int y1, int width, int height, int dx1, int dy1){
+        pic= p;
+        fpic = f;
+        x = x1;
+        y = y1;
+        w = width;
+        h = height;
+        dx = dx1;
+        dy = dy1;
+    }
+
+    // methods
+
+    public void drawBG(Graphics g2d){
+        g2d.drawImage(new ImageIcon(pic).getImage(), x, y, w*2, h*2, null);
+        g2d.drawImage(new ImageIcon(fpic).getImage(), x, y, w*2, h*2, null);
+    }
+
+
+    // getters and setters
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getDx() {
+        return dx;
+    }
+
+    public void setDx(int dx) {
+        this.dx = dx;
+    }
+
+    public int getDy() {
+        return dy;
+    }
+
+    public void setDy(int dy) {
+        this.dy = dy;
+    }
+
+    public int getW() {
+        return w;
+    }
+
+    public void setW(int w) {
+        this.w = w;
+    }
+
+    public int getH() {
+        return h;
+    }
+
+    public void setH(int h) {
+        this.h = h;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+
+
+    
+
+}
