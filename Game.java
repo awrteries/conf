@@ -138,8 +138,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		BG.drawBG(g2d);
 		BG.moveBG(active, player);
 		drawSprites(g2d);
-		BG.drawFW(g2d);
-	
+		
 		twoDgraph.drawImage(back, null, 0, 0);
 
 	}
@@ -208,7 +207,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 		
 		
-
+		BG.drawFW(g2d);
+	
 		// drawing the interface
 		for (int l = 0; l < inter.size(); l++) {
 				
@@ -300,17 +300,17 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 				if (!testDialogue.isaChoosing()){
 					if (key == 68 || key == 39){ // D
-						player.setDx(1);
+						player.setDx(2);
 						player.setDy(0);
 						player.setW(51);
 						player.setSprite(player.getWalkR());
 
-						BG.setDx(-1);
+						BG.setDx(-2);
 						BG.setDy(0);
 						
 					} 
 					else if (key == 65 || key == 37){ // A
-						player.setDx(-1);
+						player.setDx(-2);
 						player.setDy(0);
 						player.setW(51);
 						player.setSprite(player.getWalkL());

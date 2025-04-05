@@ -56,7 +56,7 @@ public class Dialogue {
 
     public void changeInter (ArrayList<Interface> inter){
         
-        int iy = 596;
+        int iy = hi - 270;
         if (aCList.size()>0){
             for (int j = 0; j < aCList.size() ; j++) {
                 
@@ -91,7 +91,7 @@ public class Dialogue {
     public void drawAC(Graphics g2d){
         // FontMetrics fm = g2d.getFontMetrics();
         g2d.setFont(new Font("Jersey 10", Font.PLAIN, 25)); 
-        int iy = hi;
+        int iy = hi-232;
         for (int i = 0; i < aCList.size(); i++) {
 
             if (i==sel){
