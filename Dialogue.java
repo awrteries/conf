@@ -74,8 +74,12 @@ public class Dialogue {
 
     public void drawDialogue(Graphics g2d){
 
-            g2d.setFont(new Font("Jersey 10", Font.PLAIN, 35));
-			g2d.drawString(getSpeaker().getName(), wi-1050, hi-255);
+            
+            if (speaker!=null){
+                g2d.setFont(new Font("Jersey 10", Font.PLAIN, 35));
+                g2d.drawString(getSpeaker().getName(), wi-1050, hi-255);
+            }
+			
 			g2d.setColor(Color.white);
 			g2d.setFont(new Font("Jersey 10", Font.PLAIN, 15)); // please figure out a more efficient font size changer thing
 			g2d.drawString(dInstruction, wi-535, hi-95);
@@ -166,6 +170,12 @@ public class Dialogue {
                         // } 
                         } else if (ba.equals("[STOP]")){
                             entities.get(i).setInteraction(false);
+                        } else if (ba.startsWith("[N]")){
+                            inter.get(0).setPic("assets/boxes/silverdboxNT.png");
+                            speaker = null;
+                            removeSubStr = "[N]";
+                            cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue 
+                            setcW();
                         }
 
                         if (!aChoosing){
