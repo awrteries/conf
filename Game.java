@@ -11,7 +11,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 	
 	private BufferedImage back; 
-	private int key, x, y, invsel; 
+	private int key, x, y, invsel, hi, wi; 
 	private Player player;
 	private Fern fern;
 	private Valentino val;
@@ -29,6 +29,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 	
 	public Game() {
+
+		wi = Toolkit.getDefaultToolkit().getScreenSize().width;
+        hi = Toolkit.getDefaultToolkit().getScreenSize().height;
 		new Thread(this).start();	
 		this.addKeyListener(this);
 		this.addMouseListener(this);
@@ -36,8 +39,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		key =-1; 
 		x=0;
 		y=0;
-		player = new Player(450, 450);
-		fern = new Fern(725,480);
+		player = new Player((wi/2), hi/2);
+		player.setX((wi/2)-player.getW());
+		player.setY((hi/2)-player.getH());
+		fern = new Fern(725,390);
 		val = new Valentino(800, 300);
 		blythe = new Blythe(1000,310);
 		peng = new Lien(500, 485);
@@ -49,7 +54,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		inter = setInter();
 		raction = false;
 		invsel = 0;
-		BG = new Backgrounds("assets/backgrounds/1stapt.png", "assets/backgrounds/1staptfrontwalls.png", 0,0,750,450,0,0);
+		BG = new Backgrounds("assets/backgrounds/1stapt (1).png", "assets/backgrounds/1staptfrontwalls.png", -30,-30,800,550,0,0);
+	
+	
 	}
 
 	// setting arraylists
@@ -62,7 +69,12 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		temp.add(player);
 		
 		// npcs
-		
+		// temp.add(val);
+		temp.add(fern);
+		temp.add(peng);
+		// temp.add(blythe);
+
+
 		// items
 		temp.add(new CBox(1000, 260));
 		temp.add(new CBox(800, 700));
@@ -79,8 +91,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	}
 	public ArrayList<Interface> setInter(){
 		ArrayList<Interface> temp = new ArrayList<Interface>();
-        temp.add(new Interface("assets/boxes/invbox.png", 400, 672, 350, 108));
-
+        temp.add(new Interface("assets/boxes/invbox.png", 400, hi-100, 350, 108));
+		temp.get(0).setY(hi-70-temp.get(0).getH()*2);
 		return temp;
 	}
 	
@@ -124,8 +136,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 		raction = Interaction();
 		BG.drawBG(g2d);
+		BG.moveBG(active, player);
 		drawSprites(g2d);
-
+		BG.drawFW(g2d);
 	
 		twoDgraph.drawImage(back, null, 0, 0);
 
@@ -135,7 +148,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 	public void drawSprites(Graphics g2d){
 		// player.drawEntity(g2d);
-		player.Move(active);
+		player.Move(active,BG);
 		Interface minter = inter.get(0);
 
 		// drawing sprites and setting dialogue
@@ -209,7 +222,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			
 			bottomBox.setPic("assets/boxes/silverdbox.png"); // sets the image to the dialogue box
 			bottomBox.setH(108);
-			bottomBox.setY(580);
+			bottomBox.setY(hi-70-bottomBox.getH()*2);
 
 
 		testDialogue.runDialogue(active, inter, testDialogue.getDialogueList().get(0), player); // dialogue idk i forgot
@@ -223,7 +236,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		} else if (!raction){
 			bottomBox.setPic("assets/boxes/invbox.png"); // sets the image to the inventory box
 			bottomBox.setH(62);
-			bottomBox.setY(672);
+			bottomBox.setY(hi-70-bottomBox.getH()*2);
 
 			drawItems(g2d);
 		}
@@ -238,7 +251,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 		if (!(temp == null)){
 				for (int i = 0; i < temp.size(); i++) {
-					temp.get(i).drawItems(g2d, sX-temp.get(i).getW(), 735-temp.get(i).getH());
+					temp.get(i).drawItems(g2d, sX-temp.get(i).getW(), (hi-132)-temp.get(i).getH());
 					sX += 142;
 			}
 		}
@@ -283,21 +296,27 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 		key= e.getKeyCode();
 		System.out.println(key);
-		System.out.println(testDialogue.isaChoosing());
+		// System.out.println(testDialogue.isaChoosing());
 
 				if (!testDialogue.isaChoosing()){
 					if (key == 68 || key == 39){ // D
-						player.setDx(2);
+						player.setDx(1);
 						player.setDy(0);
 						player.setW(51);
 						player.setSprite(player.getWalkR());
+
+						BG.setDx(-1);
+						BG.setDy(0);
 						
 					} 
 					else if (key == 65 || key == 37){ // A
-						player.setDx(-2);
+						player.setDx(-1);
 						player.setDy(0);
 						player.setW(51);
 						player.setSprite(player.getWalkL());
+
+						BG.setDx(2);
+						BG.setDy(0);
 						
 					}
 					else if (key == 87 || key == 38) { // W
@@ -305,12 +324,18 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 						player.setDx(0);
 						player.setW(56);
 						player.setSprite(player.getWalkU());
+
+						BG.setDx(0);
+						BG.setDy(2);
 					}
 					else if (key == 83 || key == 40){ // S
 						player.setDy(2);
 						player.setDx(0);
 						player.setW(56);
 						player.setSprite(player.getWalkD());
+
+						BG.setDx(0);
+						BG.setDy(-2);
 					}
 				} else if (testDialogue.isaChoosing()) {
 					
@@ -375,7 +400,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			for (int i = 0; i < player.getInventory().size(); i++) {
 				if (invsel==i){
 					player.getInventory().get(i).setInteraction(true);
-					System.out.println("happening");
+					// System.out.println("happening");
 
 				}
 			}
@@ -397,18 +422,23 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				player.setW(59);
 				player.setSprite(player.getIdleR());
 				
+				BG.setDx(0);
 	
 			} 
 			else if (key == 65 || key == 39){ // A
 				player.setDx(0);
 				player.setW(59);
 				player.setSprite(player.getIdleL());
+
+				BG.setDx(0);
 				
 			}
 			else if (key == 87 || key == 83 || key == 38 || key == 40) { // W, S
 				player.setDy(0);
 				player.setW(59);
 				player.setSprite(player.getIdleL());
+
+				BG.setDy(0);
 	
 			}
 		}

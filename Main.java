@@ -7,8 +7,7 @@ public class Main extends JFrame{
 	
 	public Main () {
 		super("conf");
-		setSize(1500, 900);		
-		Game play = new Game();
+		setSize(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);		Game play = new Game();
 		((Component) play).setFocusable(true);
 
 		
