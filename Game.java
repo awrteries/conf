@@ -12,13 +12,14 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	
 	private BufferedImage back; 
 	private int key, x, y, invsel, hi, wi; 
+	private String screen;
 	private Player player;
 	private Fern fern;
 	private Valentino val;
 	private Blythe blythe;
 	private Lien peng;
 	// private CBox box; 
-	private ArrayList <Entities> speakable, active;
+	private ArrayList <Entities> speakable, active, opening;
 	private ArrayList<Stickers> stickers;
 	private ArrayList<Interface> inter;
 	private Dialogue testDialogue;
@@ -50,6 +51,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		// box = new CBox(800,200);
 		active = setActive();
 		stickers = setStickers();
+
+		opening = setOpening();
 		testDialogue = new Dialogue();
 		testDialogue.setDialogueList();	
 		inter = setInter();
@@ -58,29 +61,39 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		APT1 = new Apartment1();	
 
 		BG = APT1;
+
+		screen = "opening";
 	
 	}
 
 	// setting arraylists
 
 	
+	public ArrayList<Entities> setOpening(){
+		ArrayList<Entities> temp = new ArrayList<Entities>();
+		temp.add(player);
+
+		temp.add(new CBox(1000, 260));
+		temp.add(new CBox(800, 700));
+		temp.add(new CBox(400,600));
+				temp.add(val);
+
+
+		return temp;
+	}
 
 	public ArrayList<Entities> setActive(){
 		ArrayList<Entities> temp = new ArrayList<Entities>();		
 		
-		temp.add(player);
 		
 		// npcs
-		// temp.add(val);
 		// temp.add(fern);
 		temp.add(peng);
 		// temp.add(blythe);
 
 
 		// items
-		temp.add(new CBox(1000, 260));
-		temp.add(new CBox(800, 700));
-		temp.add(new CBox(400,600));
+		
 		
 		
 		return temp;
@@ -137,9 +150,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		FontMetrics fm = g2d.getFontMetrics();
 		
 		raction = Interaction();
-		BG.drawBG(g2d, player);
-		BG.moveBG(active, player);
-		drawSprites(g2d);
+		// BG.drawBG(g2d, player);
+		// BG.moveBG(active, player);
+		// drawSprites(g2d);
+
+		drawScreens(g2d);
 		
 		twoDgraph.drawImage(back, null, 0, 0);
 
@@ -147,71 +162,74 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 	// methods
 
-	public void drawSprites(Graphics g2d){
-		// player.drawEntity(g2d);
-		player.Move(active,BG);
-		Interface minter = inter.get(0);
+	private void drawScreens(Graphics g2d){
+		switch (screen){
+			case "opening":
+			// Backgrounds, ArrayList ent 
+				APT1.drawBG(g2d, player);
+				APT1.moveBG(opening, player);
+				drawENTS(g2d, opening, APT1);
+				checkInteraction(g2d, opening);
+				inventorySelection(opening);
+				APT1.drawFW(g2d);
+				drawBottomBox(g2d);
+			break;
+		}
+	}
 
-		// drawing sprites and setting dialogue
-		
+	public void drawENTS(Graphics g2d, ArrayList<Entities> ent, Backgrounds b){
+		for (int i = 0; i < ent.size(); i++) {
+			Entities e = ent.get(i);
 
-		
-		
-		for (int i = 0; i < active.size(); i++) {
-			Entities npc = active.get(i);
+			e.drawEntity(g2d);
 
-		
-			npc.drawEntity(g2d);
+			if (e instanceof Player){
+				((Player) e).Move(ent, b);
+			}
+		}
+	}
 
-			
-			
-			
-			
+	public void checkInteraction(Graphics g2d, ArrayList<Entities> ent){
+		for (int i = 0; i < ent.size(); i++) {
+			Entities e = ent.get(i);
 
-			if (!(npc instanceof Player)){
+
+			if (!(e instanceof Player)){
 				
-				player.Interact(npc, stickers);
-				if (npc.isInteraction()){
+				player.Interact(e, stickers); // please check to see what stickers is because i haven't a clue
+				if (e.isInteraction()){
 
 					
 				for (int j = 0; j < stickers.size(); j++) {
 				Stickers s = stickers.get(j);
-				s.Move(npc);	
+				s.Move(e);	
 				s.drawSticker(g2d);
-
-				if (npc instanceof Items){ // you can delete this later, this is just a check to see if the appending in the inv works
-					((Items) npc).inv(player.getInventory(), active);
-					
-				}
 			}
-			
-				} else if (!npc.isInteraction()){
+				} else if (!e.isInteraction()){
 	
 				}
 
 				for (int j = 0; j < stickers.size(); j++) {
 					Stickers s = stickers.get(j);
-					s.Move(npc);
+					s.Move(e);
 					s.drawSticker(g2d);
 				}
 				
 			} 
 			
 		}
+	}
 
+	public void inventorySelection(ArrayList<Entities> ent){
 		if (!(player.getInventory()==null)){ // inventory selection
-						for (int l = 0; l < player.getInventory().size(); l++) {
-							player.getInventory().get(l).invSel(player.getInventory(), invsel, active, player);
-						}	
-						}
-					
-					// System.out.println(player.getInventory());
-
-		
-		
-		BG.drawFW(g2d);
+			for (int l = 0; l < player.getInventory().size(); l++) {
+				player.getInventory().get(l).invSel(player.getInventory(), invsel, ent, player);
+			}	
+			}
+	}
 	
-		// drawing the interface
+	public void drawBottomBox(Graphics g2d){
+	
 		for (int l = 0; l < inter.size(); l++) {
 				
 	
@@ -225,15 +243,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			bottomBox.setPic("assets/boxes/silverdbox.png"); // sets the image to the dialogue box
 			bottomBox.setH(108);
 			bottomBox.setY(hi-70-bottomBox.getH()*2);
-
-
-		testDialogue.runDialogue(active, inter, testDialogue.getDialogueList().get(0), player); // dialogue idk i forgot
-		if (testDialogue.getDialogueList().size()>1){
-
-			
-			testDialogue.drawDialogue(g2d);
-		
-		}
+			dialogue(g2d);
 			
 		} else if (!raction){
 			bottomBox.setPic("assets/boxes/invbox.png"); // sets the image to the inventory box
@@ -246,8 +256,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 	}
 
-
-	public void drawItems(Graphics g2d){
+	public void drawItems(Graphics g2d){ // implemented in drawBottomBox()
 		ArrayList<Items> temp = player.getInventory();
 		int sX = 466;
 		
@@ -259,16 +268,26 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		}
 	}
 
-	
+	public void dialogue(Graphics g2d){ // implemented in drawBottomBox() but maybe will edit
+		testDialogue.runDialogue(opening, inter, testDialogue.getDialogueList().get(0), player); // dialogue idk i forgot
+		if (testDialogue.getDialogueList().size()>1){
 
-	public boolean Interaction(){ // i love this code
+			// hi move this idk what this is help
+			
+			
+			testDialogue.drawDialogue(g2d);
+		
+		}
+	}
+
+	public boolean Interaction(){ // implemented in drawBottomBox()
 		boolean temp = false;
 		
-		for (int i = 0; i < active.size(); i++) {
+		for (int i = 0; i < opening.size(); i++) {
 			// System.out.println( active.get(i).getName() + " " + active.get(i).isInteraction());
 
-			if ((active.get(i) instanceof Npcs)){
-				if ((active.get(i).isInteraction())){
+			if ((opening.get(i) instanceof Npcs)){
+				if ((opening.get(i).isInteraction())){
 					// System.out.println("should be true");
 					temp = true;
 					return temp;
@@ -280,6 +299,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 		return temp;
 	}
+
 
 	//DO NOT DELETE
 	@Override
@@ -372,8 +392,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		}
 
 		if (key ==69){ // E
-			for (int i = 0; i < active.size(); i++) {
-				Entities en = active.get(i);
+			for (int i = 0; i < opening.size(); i++) {
+				Entities en = opening.get(i);
 				
 				(en).setInteraction(true);
 				if(en instanceof Npcs){
@@ -454,10 +474,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 		}
 		if (key ==69){ // E
-			for (int i = 0; i < active.size(); i++) {
-				Entities en = active.get(i);
+			for (int i = 0; i < opening.size(); i++) {
+				Entities en = opening.get(i);
 
-				if(en instanceof Npcs){
+				if(en instanceof Items){
+					((Items) en).inv(player.getInventory(), opening);
 					// player.eyeContact((Npcs)en);
 				}
 			}

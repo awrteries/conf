@@ -50,11 +50,7 @@ public class Dialogue {
 
     // methods
 
-    // public void aSelection(){
-    //     for
-    // }
-
-    public void changeInter (ArrayList<Interface> inter){
+    public void changeInter (ArrayList<Interface> inter){ // adds boxes when there's answer choices
         
         int iy = hi - 270;
         if (aCList.size()>0){
@@ -92,7 +88,7 @@ public class Dialogue {
             
     }
 
-    public void drawAC(Graphics g2d){
+    public void drawAC(Graphics g2d){   // implemented in drawDialogue()
         // FontMetrics fm = g2d.getFontMetrics();
         g2d.setFont(new Font("Jersey 10", Font.PLAIN, 25)); 
         int iy = hi-232;
@@ -108,18 +104,19 @@ public class Dialogue {
         }
     }
 
-    public void runDialogue(ArrayList<Entities> entities, ArrayList<Interface> inter, String ba, Player player){
+    public void runDialogue(ArrayList<Entities> entities, ArrayList<Interface> inter, String ba, Player player){ // run setDialogue() before this
 
         for (int i = 0; i < entities.size(); i++) {
-            if (entities.get(i) instanceof Player || entities.get(i) instanceof Npcs) {
+              
                 if (dialogueList == null){
 
                     setDialogueList();
         
                 } else {
-                    // for (int i = 0; i < entities.size(); i++) {
+
+                    if (entities.get(i) instanceof Player || entities.get(i) instanceof Npcs) {
+                   
                         Entities entity = entities.get(i);
-                        // String ba = dialogueList.get(0);
         
                         if (ba.startsWith(entity.getName())){ // if the dialogue starts with a character's name the program will set the current speaker to that character
                             speaker = entity;
@@ -196,7 +193,7 @@ public class Dialogue {
                    
     }
 
-    public void setcW(){
+    public void setcW(){ // cW is current word
         emptycW();
 
         String[] word = cDialogue.split(" "); 
@@ -215,7 +212,7 @@ public class Dialogue {
         }
     }
 
-    public void drawcW(Graphics g2d, int startx){
+    public void drawcW(Graphics g2d, int startx){ // implemented in drawDialogue()
         FontMetrics fm = g2d.getFontMetrics(); 
             int wordSpacing = 10; 
             int sx = startx;
@@ -235,7 +232,7 @@ public class Dialogue {
         }
     }
 
-    public ArrayList<String> setDialogue(){
+    public ArrayList<String> setDialogue(){ // sets ba, implemented in runDialogue() i hope.
         ArrayList<String> temp = new ArrayList<String>();
         
         // try {
