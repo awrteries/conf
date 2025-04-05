@@ -23,6 +23,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private ArrayList<Interface> inter;
 	private Dialogue testDialogue;
 	private boolean raction;
+	private Apartment1 APT1;
 	private Backgrounds BG;
 
 
@@ -54,8 +55,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		inter = setInter();
 		raction = false;
 		invsel = 0;
-		BG = new Backgrounds("assets/backgrounds/1stapt (1).png", "assets/backgrounds/1staptfrontwalls.png", -30,-30,800,550,0,0);
-	
+		APT1 = new Apartment1();	
+
+		BG = APT1;
 	
 	}
 
@@ -70,7 +72,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 		// npcs
 		// temp.add(val);
-		temp.add(fern);
+		// temp.add(fern);
 		temp.add(peng);
 		// temp.add(blythe);
 
@@ -135,7 +137,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		FontMetrics fm = g2d.getFontMetrics();
 		
 		raction = Interaction();
-		BG.drawBG(g2d);
+		BG.drawBG(g2d, player);
 		BG.moveBG(active, player);
 		drawSprites(g2d);
 		
