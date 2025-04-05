@@ -7,13 +7,13 @@ public class Backgrounds {
 
     int x, y, dx, dy, w, h;
     String pic, fpic;
-    boolean isMovingW, isMovingH;
+    boolean isMovingW, isMovingH, collmoveW;
+    ArrayList<Barriers> barriers;
 
 
     public Backgrounds(){
 
     }
-
     public Backgrounds(String p, String f,int x1, int y1, int width, int height, int dx1, int dy1){
         pic= p;
         fpic = f;
@@ -25,12 +25,36 @@ public class Backgrounds {
         dy = dy1;
         isMovingW = true;
         isMovingH = true;
+        barriers = new ArrayList<Barriers>();
+    }
+
+
+    public Backgrounds(String p, int x1, int y1, int width, int height, int dx1, int dy1){
+        pic= p;
+        x = x1;
+        y = y1;
+        w = width;
+        h = height;
+        dx = dx1;
+        dy = dy1;
+        isMovingW = true;
+        isMovingH = true;
+        collmoveW = true;
     }
 
     // methods
 
-    public void drawBG(Graphics g2d){
+    public void drawBG(Graphics g2d, Player p){
         g2d.drawImage(new ImageIcon(pic).getImage(), x, y, w*2, h*2, null);
+    
+        if (!barriers.isEmpty()){
+          for (int i = 0; i < barriers.size(); i++) {
+            Barriers barrier = barriers.get(i);
+            barrier.drawBarrier(g2d);
+            barrier.collision(p, this);
+        }  
+        }
+        
     }
 
     public void drawFW(Graphics g2d){
@@ -50,6 +74,14 @@ public class Backgrounds {
                 }
                 
             }
+
+            if (!barriers.isEmpty()){
+               for (int i = 0; i < barriers.size(); i++) {
+                barriers.get(i).setY(barriers.get(i).getY()+dy);
+            } 
+            }
+
+            
            
             y += dy;
             setMovingH(true);
@@ -61,6 +93,13 @@ public class Backgrounds {
                 }
                 
             }
+
+            if (!barriers.isEmpty()){
+                for (int i = 0; i < barriers.size(); i++) {
+                 barriers.get(i).setX(barriers.get(i).getX()+dx);
+             } 
+             }
+
             x += dx;
             setMovingW(true);
         }
@@ -94,6 +133,7 @@ public class Backgrounds {
         
         
     }
+
 
 
     // getters and setters
@@ -177,9 +217,20 @@ public class Backgrounds {
     public void setMovingH(boolean isMovingH) {
         this.isMovingH = isMovingH;
     }
+    public ArrayList<Barriers> getBarriers() {
+        return barriers;
+    }
+    public void setBarriers(ArrayList<Barriers> barriers) {
+        this.barriers = barriers;
+    }
+    public boolean isCollmoveW() {
+        return collmoveW;
+    }
+    public void setCollmoveW(boolean collmoveW) {
+        this.collmoveW = collmoveW;
+    }
 
    
-
 
     
 
