@@ -39,7 +39,6 @@ public class Barriers extends Backgrounds{
        
 
        if (pBottom>=top+5&&pBottom<=bottom-5){
-        System.out.println("kysw");
             if (pLeft<right && pLeft>getX()+getW()){
                 p.setX(right);
             } else if (pRight>left && pRight<getX()+getW()){

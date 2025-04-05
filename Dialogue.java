@@ -42,9 +42,6 @@ public class Dialogue {
         sel = 0;
         aChoosing = false;
         
-        
-        
-
 
     }
 

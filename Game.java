@@ -19,10 +19,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private Blythe blythe;
 	private Lien peng;
 	// private CBox box; 
-	private ArrayList <Entities> speakable, active, opening;
+	private ArrayList <Entities> speakable, entities, opening, test;
 	private ArrayList<Stickers> stickers;
 	private ArrayList<Interface> inter;
-	private Dialogue testDialogue;
+	private Dialogue dialogue;
 	private boolean raction;
 	private Apartment1 APT1;
 	private Backgrounds BG;
@@ -48,19 +48,20 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		val = new Valentino(800, 300);
 		blythe = new Blythe(1000,310);
 		peng = new Lien(500, 485);
-		// box = new CBox(800,200);
-		active = setActive();
 		stickers = setStickers();
-
 		opening = setOpening();
-		testDialogue = new Dialogue();
-		testDialogue.setDialogueList();	
+		test = setTest();
+		dialogue = new Dialogue();
+		dialogue.setDialogueList();	
 		inter = setInter();
 		raction = false;
 		invsel = 0;
 		APT1 = new Apartment1();	
-
-		BG = APT1;
+		
+		
+		
+		entities = new ArrayList<Entities>();
+		BG = new Backgrounds();
 
 		screen = "opening";
 	
@@ -82,20 +83,14 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		return temp;
 	}
 
-	public ArrayList<Entities> setActive(){
-		ArrayList<Entities> temp = new ArrayList<Entities>();		
-		
-		
-		// npcs
-		// temp.add(fern);
+	public ArrayList<Entities> setTest(){
+		ArrayList<Entities> temp = new ArrayList<Entities>();
+		temp.add(player);
+
 		temp.add(peng);
-		// temp.add(blythe);
+				temp.add(val);
 
 
-		// items
-		
-		
-		
 		return temp;
 	}
 
@@ -127,10 +122,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	      }
 	  	}
 	
-
-	
-	
-	
 	public void paint(Graphics g){
 		
 		Graphics2D twoDgraph = (Graphics2D) g; 
@@ -155,6 +146,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		// drawSprites(g2d);
 
 		drawScreens(g2d);
+		template(g2d);
 		
 		twoDgraph.drawImage(back, null, 0, 0);
 
@@ -162,17 +154,30 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 	// methods
 
+	private void template(Graphics g2d){
+		BG.drawBG(g2d, player);
+		BG.moveBG(entities, player);
+		drawENTS(g2d, entities, BG);
+		checkInteraction(g2d, entities);
+		inventorySelection(entities);
+		BG.drawFW(g2d);
+		drawBottomBox(g2d);
+	}
+
 	private void drawScreens(Graphics g2d){
+
+		
+
 		switch (screen){
+
 			case "opening":
 			// Backgrounds, ArrayList ent 
-				APT1.drawBG(g2d, player);
-				APT1.moveBG(opening, player);
-				drawENTS(g2d, opening, APT1);
-				checkInteraction(g2d, opening);
-				inventorySelection(opening);
-				APT1.drawFW(g2d);
-				drawBottomBox(g2d);
+
+				BG = APT1;
+				entities = opening;
+			break;
+			case "test":
+				entities = test;
 			break;
 		}
 	}
@@ -269,13 +274,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	}
 
 	public void dialogue(Graphics g2d){ // implemented in drawBottomBox() but maybe will edit
-		testDialogue.runDialogue(opening, inter, testDialogue.getDialogueList().get(0), player); // dialogue idk i forgot
-		if (testDialogue.getDialogueList().size()>1){
-
+		dialogue.runDialogue(entities, inter, dialogue.getDialogueList().get(0), player); // dialogue idk i forgot
+		if (dialogue.getDialogueList().size()>1){
 			// hi move this idk what this is help
 			
-			
-			testDialogue.drawDialogue(g2d);
+			dialogue.drawDialogue(g2d);
 		
 		}
 	}
@@ -283,11 +286,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public boolean Interaction(){ // implemented in drawBottomBox()
 		boolean temp = false;
 		
-		for (int i = 0; i < opening.size(); i++) {
+		for (int i = 0; i < entities.size(); i++) {
 			// System.out.println( active.get(i).getName() + " " + active.get(i).isInteraction());
 
-			if ((opening.get(i) instanceof Npcs)){
-				if ((opening.get(i).isInteraction())){
+			if ((entities.get(i) instanceof Npcs)){
+				if ((entities.get(i).isInteraction())){
 					// System.out.println("should be true");
 					temp = true;
 					return temp;
@@ -320,7 +323,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		System.out.println(key);
 		// System.out.println(testDialogue.isaChoosing());
 
-				if (!testDialogue.isaChoosing()){
+				if (!dialogue.isaChoosing()){
 					if (key == 68 || key == 39){ // D
 						player.setDx(2);
 						player.setDy(0);
@@ -359,14 +362,14 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 						BG.setDx(0);
 						BG.setDy(-2);
 					}
-				} else if (testDialogue.isaChoosing()) {
+				} else if (dialogue.isaChoosing()) {
 					
 					if (key == 83 || key == 40){ // S
-						testDialogue.setSel(testDialogue.getSel()+1);
+						dialogue.setSel(dialogue.getSel()+1);
 						
 					} 
 					else if (key == 87 || key == 38) { // W
-						testDialogue.setSel(testDialogue.getSel()-1);
+						dialogue.setSel(dialogue.getSel()-1);
 						
 					}
 				}
@@ -379,7 +382,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 
 		if (key == 32){ // [SPACE]	
-			ArrayList<String> dl = testDialogue.getDialogueList();
+			ArrayList<String> dl = dialogue.getDialogueList();
 			
 				if (dl.size()>1){
 				dl.remove(0);	
@@ -392,15 +395,15 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		}
 
 		if (key ==69){ // E
-			for (int i = 0; i < opening.size(); i++) {
-				Entities en = opening.get(i);
+			for (int i = 0; i < entities.size(); i++) {
+				Entities en = entities.get(i);
 				
 				(en).setInteraction(true);
 				if(en instanceof Npcs){
 					if (player.inProximity((Npcs)en)){
-						testDialogue=((Npcs) en).getcDialogue();
-						testDialogue.setDialogueList();
-						testDialogue.setcW();
+						dialogue=((Npcs) en).getcDialogue();
+						dialogue.setDialogueList();
+						dialogue.setcW();
 						// player.eyeContact((Npcs)en);
 					}
 				}
@@ -428,7 +431,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			}
 		}
 		}
-	
+
+		
+		if (key == 70){
+			screen = "test";
+		}
 	}
 
 
@@ -438,7 +445,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 		// player movement
 
-		if (!testDialogue.isaChoosing()){
+		if (!dialogue.isaChoosing()){
 			if (key == 68 || key == 37){ // D
 				player.setDx(0);
 				player.setX(player.getX()-16);
@@ -468,17 +475,17 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		
 
 		if (key == 32){ // [SPACE]	
-			ArrayList<String> dl = testDialogue.getDialogueList();
-			testDialogue.setcW();
-			testDialogue.changeInter(inter);
+			ArrayList<String> dl = dialogue.getDialogueList();
+			dialogue.setcW();
+			dialogue.changeInter(inter);
 		
 		}
 		if (key ==69){ // E
-			for (int i = 0; i < opening.size(); i++) {
-				Entities en = opening.get(i);
+			for (int i = 0; i < entities.size(); i++) {
+				Entities en = entities.get(i);
 
 				if(en instanceof Items){
-					((Items) en).inv(player.getInventory(), opening);
+					((Items) en).inv(player.getInventory(), entities);
 					// player.eyeContact((Npcs)en);
 				}
 			}
@@ -523,17 +530,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		// TODO Auto-generated method stub
 		System.out.println("entered");
 	}
-
-
-
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println("exited");
 	}
-
-
-
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -543,9 +544,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		y=arg0.getY();
 		
 	}
-
-
-
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
