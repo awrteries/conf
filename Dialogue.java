@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class Dialogue {
     private ArrayList<String> dialogueList, cWList, aCList, ECList;
     private int sel;
     private boolean aChoosing;
+    int wi = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int hi = Toolkit.getDefaultToolkit().getScreenSize().height;
     
 
     // private ArrayList<Interface> 
@@ -40,6 +43,7 @@ public class Dialogue {
         aChoosing = false;
         
         
+        
 
 
     }
@@ -51,6 +55,7 @@ public class Dialogue {
     // }
 
     public void changeInter (ArrayList<Interface> inter){
+        
         int iy = 596;
         if (aCList.size()>0){
             for (int j = 0; j < aCList.size() ; j++) {
@@ -63,21 +68,21 @@ public class Dialogue {
         } else {
             dInstruction = "press [SPACE] to continue.";
         }
-        System.out.println(inter.size());
+        // System.out.println(inter.size());
 
     }
 
     public void drawDialogue(Graphics g2d){
 
             g2d.setFont(new Font("Jersey 10", Font.PLAIN, 35));
-			g2d.drawString(getSpeaker().getName(), 420, 612);
+			g2d.drawString(getSpeaker().getName(), wi-1050, hi-255);
 			g2d.setColor(Color.white);
 			g2d.setFont(new Font("Jersey 10", Font.PLAIN, 15)); // please figure out a more efficient font size changer thing
-			g2d.drawString(dInstruction, 940, 770);
+			g2d.drawString(dInstruction, wi-535, hi-95);
 			
             g2d.setFont(new Font("Jersey 10", Font.PLAIN, 30));
 			
-            drawcW(g2d, 430, 660);
+            drawcW(g2d, 430);
             drawAC(g2d);
             
             
@@ -86,7 +91,7 @@ public class Dialogue {
     public void drawAC(Graphics g2d){
         // FontMetrics fm = g2d.getFontMetrics();
         g2d.setFont(new Font("Jersey 10", Font.PLAIN, 25)); 
-        int iy = 635;
+        int iy = hi;
         for (int i = 0; i < aCList.size(); i++) {
 
             if (i==sel){
@@ -200,10 +205,11 @@ public class Dialogue {
         }
     }
 
-    public void drawcW(Graphics g2d, int startx, int starty){
+    public void drawcW(Graphics g2d, int startx){
         FontMetrics fm = g2d.getFontMetrics(); 
             int wordSpacing = 10; 
             int sx = startx;
+            int sy = hi-205;
             for (int i = 0; i < cWList.size(); i++) {
             String word = cWList.get(i);
     
@@ -211,10 +217,10 @@ public class Dialogue {
     
             if (sx + wordWidth > 1080) {
                 sx = startx; // Reset to the left margin
-                starty += fm.getHeight()-5; // Move down by the height of the font
+                sy += fm.getHeight()-5; // Move down by the height of the font
             }
     
-            g2d.drawString(word, sx, starty);
+            g2d.drawString(word, sx, sy);
                 sx += wordWidth + wordSpacing; 
         }
     }

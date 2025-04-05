@@ -1,9 +1,11 @@
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Player extends Entities {
 
     private ArrayList<Items> inventory;
+    private boolean isMovingW, isMovingH;
     public Player(){
         super();
     }
@@ -13,32 +15,53 @@ public class Player extends Entities {
         "assets/player/baseidlel.gif", "assets/player/baseidlel.gif", "assets/player/baseidler.gif", "assets/player/basewalkd.gif", "assets/player/basewalku.gif", "assets/player/basewalkl.gif", "assets/player/basewalkr.gif"
         );
         inventory = new ArrayList<Items>();
-
+        isMovingW = false;
+        isMovingH = false;
+        
         
     }
     // methods
 
 
-    public void Move(ArrayList<Entities> en){
-        super.moveEntity();
+    public void Move(ArrayList<Entities> en, Backgrounds b){
+        // System.out.println(getX() + " " + getY());
 
-        int wi = 1420;
-        int hi = 750;
+        int wi = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int hi = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+    
+
+        if (!b.isMovingH){
+            setY(getY()+getDy());
+            setMovingH(true);
+        } 
         
-        if( getX() < 0){
+        if (!b.isMovingW){
+           setX(getX()+getDx());
+            setMovingW(true); 
+        }
+        
+        
+
+        if (getY()<0){
+            setY(0);
+           } else if (getY()+(getH()*2)>hi){
+            setY(hi-(getH()*2));
+           } else if (getX()<0){
             setX(0);
-        }
-        else if (getX()+getW()>wi) {
+           } else if (getX()+(getW()*2)>wi){
+            setX(wi-(getW()*2));
+           }
 
-            setX(wi-getW());
-        }
+        if (getY()+getH()==hi/2){
+            setMovingH(false);
+        } 
+        
+        if (getX()+getW()==(wi/2)){
+            setMovingW(false);
+        } 
 
-        if (getY()< -20) {
-            setY(-20);
-        }
-        else if (getY()+getH()> hi-35){
-            setY(hi-35-getH());
-        }
+      
         for (int i = 0; i < en.size(); i++) {
             Entities e = en.get(i);
          if (!(e instanceof Player)){
@@ -121,6 +144,24 @@ public class Player extends Entities {
     public void setInventory(ArrayList<Items> inventory) {
         this.inventory = inventory;
     }
+
+    public boolean isMovingW() {
+        return isMovingW;
+    }
+
+    public void setMovingW(boolean isMovingW) {
+        this.isMovingW = isMovingW;
+    }
+
+    public boolean isMovingH() {
+        return isMovingH;
+    }
+
+    public void setMovingH(boolean isMovingH) {
+        this.isMovingH = isMovingH;
+    }
+
+  
 
     
 

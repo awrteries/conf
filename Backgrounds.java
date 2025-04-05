@@ -1,10 +1,13 @@
 import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class Backgrounds {
 
     int x, y, dx, dy, w, h;
     String pic, fpic;
+    boolean isMovingW, isMovingH;
 
 
     public Backgrounds(){
@@ -20,13 +23,63 @@ public class Backgrounds {
         h = height;
         dx = dx1;
         dy = dy1;
+        isMovingW = true;
+        isMovingH = true;
     }
 
     // methods
 
     public void drawBG(Graphics g2d){
         g2d.drawImage(new ImageIcon(pic).getImage(), x, y, w*2, h*2, null);
+    }
+
+    public void drawFW(Graphics g2d){
         g2d.drawImage(new ImageIcon(fpic).getImage(), x, y, w*2, h*2, null);
+
+    }
+
+    public void moveBG(ArrayList<Entities> en, Player p){
+
+        int wi = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int hi = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+        if (!p.isMovingH()){
+           
+            y += dy;
+            setMovingH(true);
+        } if (!p.isMovingW()){
+            x += dx;
+            setMovingW(true);
+        }
+      
+
+       if (y>=0){
+        y = 0;
+        setMovingH(false);
+       } else if (y+(h*2)<=hi){
+        y = hi-(h*2);
+        setMovingH(false);
+       } else {
+        setMovingH(true);
+       }
+       
+       if (x>=0){
+        x = 0;
+        setMovingW(false);
+
+       } else if (x+(w*2)<=wi){
+        x = wi-(w*2);
+        setMovingW(false);
+
+       } else {
+        setMovingW(true);
+       }
+  
+
+        
+       
+        
+        
     }
 
 
@@ -88,6 +141,31 @@ public class Backgrounds {
         this.pic = pic;
     }
 
+    public String getFpic() {
+        return fpic;
+    }
+
+    public void setFpic(String fpic) {
+        this.fpic = fpic;
+    }
+
+    public boolean isMovingW() {
+        return isMovingW;
+    }
+
+    public void setMovingW(boolean isMovingW) {
+        this.isMovingW = isMovingW;
+    }
+
+    public boolean isMovingH() {
+        return isMovingH;
+    }
+
+    public void setMovingH(boolean isMovingH) {
+        this.isMovingH = isMovingH;
+    }
+
+   
 
 
     
