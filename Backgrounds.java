@@ -44,10 +44,23 @@ public class Backgrounds {
         int hi = Toolkit.getDefaultToolkit().getScreenSize().height;
 
         if (!p.isMovingH()){
+            for (int i = 0; i < en.size(); i++) {
+                if (!(en.get(i) instanceof Player)){
+                    en.get(i).setY(en.get(i).getY()+dy);
+                }
+                
+            }
            
             y += dy;
             setMovingH(true);
         } if (!p.isMovingW()){
+
+            for (int i = 0; i < en.size(); i++) {
+                if (!(en.get(i) instanceof Player)){
+                    en.get(i).setX(en.get(i).getX()+dx);
+                }
+                
+            }
             x += dx;
             setMovingW(true);
         }
