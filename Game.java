@@ -12,7 +12,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	
 	private BufferedImage back; 
 	private int key, x, y, invsel, hi, wi; 
-	private String screen;
+	private String screen, objective;
 	private Player player;
 	private Fern fern;
 	private Valentino val;
@@ -22,7 +22,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private ArrayList <Entities> speakable, entities, opening, test;
 	private ArrayList<Stickers> stickers;
 	private ArrayList<Interface> inter;
-	private Dialogue dialogue, openingDialogue;
+	private Dialogue dialogue, openingDialogue, die;
 	private boolean raction;
 	private Apartment1 APT1;
 	private Backgrounds BG;
@@ -52,6 +52,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		opening = setOpening();
 		test = setTest();
 		openingDialogue = new Dialogue("", "assets/dialogue/blytheBox");
+		die = new Dialogue("", "assets/dialogue/die");
 		dialogue = openingDialogue;
 		// dialogue.setDialogueList();	
 		inter = setInter();
@@ -65,6 +66,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		BG = new Backgrounds();
 
 		screen = "opening";
+		objective = "collect [3] boxes.";
 	
 	}
 
@@ -78,8 +80,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		temp.add(new sBox(1000, 260));
 		temp.add(new sBox(800, 700));
 		temp.add(new sBox(400,600));
-				// temp.add(val);
-
 
 		return temp;
 	}
@@ -189,7 +189,31 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 				BG = APT1;
 				entities = opening;
+				objectiveBox();
 				// dialogue = openingDialogue;
+	}
+
+	public void objectiveBox(){
+		if (objective.equals("collect [3] boxes.")){
+			int countbox = 0;
+			for (int i = 0; i < player.getInventory().size(); i++) {
+				if (player.getInventory().get(i) instanceof sBox){
+					countbox++;
+				}
+			}
+
+			if (countbox == 3){
+				objective = "idk go die";
+				player.setInteraction(true);
+				
+			}
+		} if (objective.equals("idk go die")){
+			if (!raction){
+				dialogue = die;
+			}
+			
+		}
+		
 	}
 	
 
@@ -265,6 +289,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			bottomBox.setPic("assets/boxes/invbox.png"); // sets the image to the inventory box
 			bottomBox.setH(62);
 			bottomBox.setY(hi-70-bottomBox.getH()*2);
+			g2d.setFont(new Font("Jersey 10", Font.PLAIN, 25));
+			g2d.setColor(Color.white);
+			g2d.drawString("[OBJECTIVE]: " + objective, 410, hi-200);
 
 			drawItems(g2d);
 		}
