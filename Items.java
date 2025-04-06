@@ -21,7 +21,7 @@ public class Items extends Entities{
         selected = sel;
         ground = gr;
         dialogue = new Dialogue("please work", "assets/dialogue/die");
-        active = true;
+        active = false;
     }
 
     public void inv(ArrayList<Items> item, ArrayList<Entities> en){

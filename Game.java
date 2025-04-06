@@ -53,7 +53,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		test = setTest();
 		openingDialogue = new Dialogue("", "assets/dialogue/blytheBox");
 		die = new Dialogue("", "assets/dialogue/die");
-		dialogue = openingDialogue;
+		dialogue = new Dialogue();
 		// dialogue.setDialogueList();	
 		inter = setInter();
 		raction = false;
@@ -193,6 +193,14 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public void objectiveBox(){
 		if (objective.equals("collect [3] boxes.")){
 			int countbox = 0;
+
+			setdia(openingDialogue);
+
+			for (int i = 0; i < entities.size(); i++) {
+				if (entities.get(i) instanceof sBox){
+					((sBox)entities.get(i)).setActive(true);
+				}
+			}
 			for (int i = 0; i < player.getInventory().size(); i++) {
 				if (player.getInventory().get(i) instanceof sBox){
 					countbox++;
@@ -201,18 +209,22 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 			if (countbox == 3){
 				objective = "idk go die";
+				setdia(die);
+
 				player.setInteraction(true);
 				
 			}
-		} if (objective.equals("idk go die")){
-			if (!raction){
-				dialogue = die;
-			}
-			
+		} else if (objective.equals("idk go die")){
 		}
 		
 	}
 	
+	public void setdia(Dialogue d){
+		if (!raction){
+				dialogue = d;
+		}
+
+	}
 
 	public void drawENTS(Graphics g2d, ArrayList<Entities> ent, Backgrounds b){
 		for (int i = 0; i < ent.size(); i++) {
