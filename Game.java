@@ -22,7 +22,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private ArrayList <Entities> speakable, entities, opening, test;
 	private ArrayList<Stickers> stickers;
 	private ArrayList<Interface> inter;
-	private Dialogue dialogue;
+	private Dialogue dialogue, openingDialogue;
 	private boolean raction;
 	private Apartment1 APT1;
 	private Backgrounds BG;
@@ -51,8 +51,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		stickers = setStickers();
 		opening = setOpening();
 		test = setTest();
-		dialogue = new Dialogue();
-		dialogue.setDialogueList();	
+		openingDialogue = new Dialogue("", "assets/dialogue/blytheBox");
+		dialogue = openingDialogue;
+		// dialogue.setDialogueList();	
 		inter = setInter();
 		raction = false;
 		invsel = 0;
@@ -74,10 +75,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		ArrayList<Entities> temp = new ArrayList<Entities>();
 		temp.add(player);
 
-		temp.add(new CBox(1000, 260));
-		temp.add(new CBox(800, 700));
-		temp.add(new CBox(400,600));
-				temp.add(val);
+		temp.add(new sBox(1000, 260));
+		temp.add(new sBox(800, 700));
+		temp.add(new sBox(400,600));
+				// temp.add(val);
 
 
 		return temp;
@@ -167,20 +168,30 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private void drawScreens(Graphics g2d){
 
 		
+		if (screen.equals("opening")){
+			opening();
+		}
+		// switch (screen){
 
-		switch (screen){
+		// 	case "opening":
+		// 	// Backgrounds, ArrayList ent 
 
-			case "opening":
-			// Backgrounds, ArrayList ent 
+		// 		BG = APT1;
+		// 		entities = opening;
+		// 	break;
+		// 	case "test":
+		// 		entities = test;
+		// 	break;
+		// }
+	}
+
+	public void opening(){
 
 				BG = APT1;
 				entities = opening;
-			break;
-			case "test":
-				entities = test;
-			break;
-		}
+				// dialogue = openingDialogue;
 	}
+	
 
 	public void drawENTS(Graphics g2d, ArrayList<Entities> ent, Backgrounds b){
 		for (int i = 0; i < ent.size(); i++) {
@@ -289,7 +300,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		for (int i = 0; i < entities.size(); i++) {
 			// System.out.println( active.get(i).getName() + " " + active.get(i).isInteraction());
 
-			if ((entities.get(i) instanceof Npcs)){
+			if (!(entities.get(i) instanceof Items)){
 				if ((entities.get(i).isInteraction())){
 					// System.out.println("should be true");
 					temp = true;
@@ -310,8 +321,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		// TODO Auto-generated method stub
 		
 	}
-
-
 
 
 //DO NOT DELETE
@@ -397,8 +406,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		if (key ==69){ // E
 			for (int i = 0; i < entities.size(); i++) {
 				Entities en = entities.get(i);
+				if (!(en instanceof Player)){
+					(en).setInteraction(true);
+				}
 				
-				(en).setInteraction(true);
 				if(en instanceof Npcs){
 					if (player.inProximity((Npcs)en)){
 						dialogue=((Npcs) en).getcDialogue();

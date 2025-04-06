@@ -17,7 +17,7 @@ public class Player extends Entities {
         inventory = new ArrayList<Items>();
         isMovingW = false;
         isMovingH = false;
-        
+        setInteraction(true);        
         
     }
     // methods
