@@ -11,6 +11,7 @@ public class Items extends Entities{
     private String thumbnail, selected, ground;
     // private boolean isselected;
     private Dialogue dialogue;
+    private boolean active;
     public Items(){
         super();
     }
@@ -20,10 +21,11 @@ public class Items extends Entities{
         selected = sel;
         ground = gr;
         dialogue = new Dialogue("please work", "assets/dialogue/die");
+        active = true;
     }
 
     public void inv(ArrayList<Items> item, ArrayList<Entities> en){
-        if (isInteraction()){
+        if (isInteraction()&&active){
             item.add(this);
             en.remove(en.indexOf(this));
             setSprite(thumbnail);
@@ -109,6 +111,14 @@ public class Items extends Entities{
     public void setDialogue(Dialogue dialogue) {
         this.dialogue = dialogue;
     }
+    public boolean isActive() {
+        return active;
+    }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    
 
     
 

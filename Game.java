@@ -326,8 +326,18 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 			// if (!(entities.get(i) instanceof Items)){
 				if ((entities.get(i).isInteraction())){
-					// System.out.println("should be true");
-					temp = true;
+
+					if (entities.get(i) instanceof Items){
+						if (((Items)entities.get(i)).isActive()){
+							temp = false;				 
+
+						}else if (!((Items)entities.get(i)).isActive()){
+							// System.out.println("WHYYY");
+							temp = true;
+						}
+					} else{
+						temp = true;
+					}
 					return temp;
 				} else {
 					temp = false;				 
@@ -439,6 +449,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 						} else if (en instanceof Items){
 							dialogue = ((Items)en).getDialogue();
+							dialogue.setDialogue();
 						}
 						dialogue.setDialogueList();
 						dialogue.setcW();
@@ -526,10 +537,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			for (int i = 0; i < entities.size(); i++) {
 				Entities en = entities.get(i);
 
-				// if(en instanceof Items){
-				// 	((Items) en).inv(player.getInventory(), entities);
-				// 	// player.eyeContact((Npcs)en);
-				// }
+				if(en instanceof Items){
+					((Items) en).inv(player.getInventory(), entities);
+				}
 			}
 		
 		}
