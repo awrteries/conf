@@ -124,70 +124,78 @@ public class Dialogue {
                             cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue 
                             setcW();
                             
-                        } else if (ba.startsWith("AC")){
-
-                            
-                            aChoosing = true;
-
-                            splitAC = (ba.replace("AC ", "")).split("_");
-                            while (aCList.size()<splitAC.length){
-                                for (int l = 0; l < splitAC.length; l++) {
-                                    aCList.add(splitAC[l]);
-                                    
-                                    // System.out.println(aCList.size());
-                                }
-                                sel = 0;
-                            }
-
-                            
-                            
-                            
-                                                
-        
-                        }   else if (ba.startsWith("EC")){
-                            String[] splitEC = (ba.replace("EC ", "")).split("_");
-                            
-                            while (!ECList.isEmpty()){
-                                ECList.remove(0);
-                            }
-        
-                            while (ECList.size()<splitEC.length){
-                                for (int l = 0; l < splitEC.length; l++) {
-                                    ECList.add(splitEC[l]);
-                                } 
-                            } 
-
-                            aChoosing = false;
-                            runDialogue(entities, inter, ECList.get(sel), player);                             
-                                                  
-                             
-                        // } 
-                        } else if (ba.equals("[STOP]")){
-                            entities.get(i).setInteraction(false);
-                        } else if (ba.startsWith("[N]")){
-                            inter.get(0).setPic("assets/boxes/silverdboxNT.png");
-                            speaker = null;
-                            removeSubStr = "[N]";
-                            cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue 
-                            setcW();
-                        }
-
-                        if (!aChoosing){
-                            while (!aCList.isEmpty()){
-                                aCList.remove(0);   
-                            }
-                            while (inter.size()>1){
-                                inter.remove(1);
-                            }       
+                        } else {
+                            baseCheck(entities, inter, ba, player,i);
                         }
         
                        
-                }      
+                } else {
+                    baseCheck(entities, inter, ba, player, i);
+                }
             }
         }
 
           
                    
+    }
+
+    public void baseCheck(ArrayList<Entities> entities, ArrayList<Interface> inter, String ba, Player player, int ii){ // implemented in rundia
+        if (ba.startsWith("AC")){
+
+                            
+            aChoosing = true;
+
+            splitAC = (ba.replace("AC ", "")).split("_");
+            while (aCList.size()<splitAC.length){
+                for (int l = 0; l < splitAC.length; l++) {
+                    aCList.add(splitAC[l]);
+                    
+                    // System.out.println(aCList.size());
+                }
+                sel = 0;
+            }
+
+            
+            
+            
+                                
+
+        }   else if (ba.startsWith("EC")){
+            String[] splitEC = (ba.replace("EC ", "")).split("_");
+            
+            while (!ECList.isEmpty()){
+                ECList.remove(0);
+            }
+
+            while (ECList.size()<splitEC.length){
+                for (int l = 0; l < splitEC.length; l++) {
+                    ECList.add(splitEC[l]);
+                } 
+            } 
+
+            aChoosing = false;
+            runDialogue(entities, inter, ECList.get(sel), player);                             
+                                  
+             
+        // } 
+        } else if (ba.equals("[STOP]")){
+            entities.get(ii).setInteraction(false);
+        } else if (ba.startsWith("[N]")){
+            inter.get(0).setPic("assets/boxes/silverdboxNT.png");
+            speaker = null;
+            removeSubStr = "[N]";
+            cDialogue = ba.replace(removeSubStr, ""); // this will remove the character's name from the string we got from the text file, and add the rest of the dialogue to the current dialogue 
+            setcW();
+        }
+
+        if (!aChoosing){
+            while (!aCList.isEmpty()){
+                aCList.remove(0);   
+            }
+            while (inter.size()>1){
+                inter.remove(1);
+            }       
+        }
     }
 
     public void setcW(){ // cW is current word

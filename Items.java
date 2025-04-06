@@ -10,6 +10,7 @@ public class Items extends Entities{
 
     private String thumbnail, selected, ground;
     // private boolean isselected;
+    private Dialogue dialogue;
     public Items(){
         super();
     }
@@ -18,6 +19,7 @@ public class Items extends Entities{
         thumbnail = t;
         selected = sel;
         ground = gr;
+        dialogue = new Dialogue("please work", "assets/dialogue/die");
     }
 
     public void inv(ArrayList<Items> item, ArrayList<Entities> en){
@@ -101,5 +103,13 @@ public class Items extends Entities{
         setY(y1);
         super.drawEntity(g2d);
     }
+    public Dialogue getDialogue() {
+        return dialogue;
+    }
+    public void setDialogue(Dialogue dialogue) {
+        this.dialogue = dialogue;
+    }
+
+    
 
 }

@@ -168,21 +168,18 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private void drawScreens(Graphics g2d){
 
 		
-		if (screen.equals("opening")){
-			opening();
-		}
-		// switch (screen){
-
-		// 	case "opening":
-		// 	// Backgrounds, ArrayList ent 
-
-		// 		BG = APT1;
-		// 		entities = opening;
-		// 	break;
-		// 	case "test":
-		// 		entities = test;
-		// 	break;
+		// if (screen.equals("opening")){
+			
 		// }
+		switch (screen){
+
+			case "opening":
+			opening();
+			break;
+			case "test":
+				entities = test;
+			break;
+		}
 	}
 
 	public void opening(){
@@ -327,7 +324,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		for (int i = 0; i < entities.size(); i++) {
 			// System.out.println( active.get(i).getName() + " " + active.get(i).isInteraction());
 
-			if (!(entities.get(i) instanceof Items)){
+			// if (!(entities.get(i) instanceof Items)){
 				if ((entities.get(i).isInteraction())){
 					// System.out.println("should be true");
 					temp = true;
@@ -335,7 +332,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 				} else {
 					temp = false;				 
 				} 
-			}
+			// }
 		}
 
 		return temp;
@@ -434,17 +431,24 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			for (int i = 0; i < entities.size(); i++) {
 				Entities en = entities.get(i);
 				if (!(en instanceof Player)){
-					(en).setInteraction(true);
-				}
-				
-				if(en instanceof Npcs){
-					if (player.inProximity((Npcs)en)){
-						dialogue=((Npcs) en).getcDialogue();
+					
+					if (player.inProximity(en)){
+						(en).setInteraction(true);
+						if (en instanceof Npcs){
+							dialogue=((Npcs) en).getcDialogue();
+
+						} else if (en instanceof Items){
+							dialogue = ((Items)en).getDialogue();
+						}
 						dialogue.setDialogueList();
 						dialogue.setcW();
 						// player.eyeContact((Npcs)en);
 					}
 				}
+				
+				// if(en instanceof Npcs){
+					
+				// }
 			}
 		}
 
@@ -522,10 +526,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			for (int i = 0; i < entities.size(); i++) {
 				Entities en = entities.get(i);
 
-				if(en instanceof Items){
-					((Items) en).inv(player.getInventory(), entities);
-					// player.eyeContact((Npcs)en);
-				}
+				// if(en instanceof Items){
+				// 	((Items) en).inv(player.getInventory(), entities);
+				// 	// player.eyeContact((Npcs)en);
+				// }
 			}
 		
 		}
