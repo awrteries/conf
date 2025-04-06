@@ -20,8 +20,8 @@ public class Items extends Entities{
         thumbnail = t;
         selected = sel;
         ground = gr;
-        dialogue = new Dialogue("please work", "assets/dialogue/die");
-        active = false;
+        dialogue = new Dialogue("please work", "assets/dialogue/notav");
+        active = true;
     }
 
     

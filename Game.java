@@ -18,7 +18,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private Valentino val;
 	private Blythe blythe;
 	private Lien peng;
-	// private CBox box; 
 	private ArrayList <Entities> speakable, entities, opening, test;
 	private ArrayList<Stickers> stickers;
 	private ArrayList<Interface> inter;
@@ -80,6 +79,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		temp.add(new sBox(900, 220));
 		temp.add(new sBox(800, 700));
 		temp.add(new sBox(400,600));
+		temp.add(new Journals(850, 180));
 
 		return temp;
 	}
