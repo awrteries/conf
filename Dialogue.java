@@ -130,6 +130,8 @@ public class Dialogue {
         
                        
                 } else {
+                    System.out.println("thishihsihstihsis");
+
                     baseCheck(entities, inter, ba, player, i);
                 }
             }
