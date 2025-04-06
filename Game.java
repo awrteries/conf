@@ -325,7 +325,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			// System.out.println( active.get(i).getName() + " " + active.get(i).isInteraction());
 
 			// if (!(entities.get(i) instanceof Items)){
-				if ((entities.get(i).isInteraction())){
+				if ((entities.get(i).isInteraction())&&player.inProximity(entities.get(i))){
 
 					if (entities.get(i) instanceof Items){
 						if (((Items)entities.get(i)).isActive()){
