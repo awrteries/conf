@@ -24,6 +24,8 @@ public class Items extends Entities{
         active = false;
     }
 
+    
+
     public void inv(ArrayList<Items> item, ArrayList<Entities> en){
         if (isInteraction()&&active){
             item.add(this);

@@ -9,7 +9,7 @@ public class Apartment1 extends Backgrounds{
         barriers.add(new Barriers("assets/backgrounds/barriers/1staptB3.png", x, y, 800, 108, 0, 0));
         barriers.add(new Barriers("assets/backgrounds/barriers/1staptB3.png", x+650*2, y, 152, 550, 0, 0));
 
-
+        props.add(new Props("assets/backgrounds/props/apt1stove.gif", x+547*2, y+94*2, 0, 0, 103, 36, false));
     }
 
 }

@@ -77,7 +77,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		ArrayList<Entities> temp = new ArrayList<Entities>();
 		temp.add(player);
 
-		temp.add(new sBox(1000, 260));
+		temp.add(new sBox(900, 220));
 		temp.add(new sBox(800, 700));
 		temp.add(new sBox(400,600));
 
@@ -158,6 +158,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private void template(Graphics g2d){
 		BG.drawBG(g2d, player);
 		BG.moveBG(entities, player);
+		if (!(BG.getProps().isEmpty())){
+			BG.addtoMain(entities);
+		}
 		drawENTS(g2d, entities, BG);
 		checkInteraction(g2d, entities);
 		inventorySelection(entities);
@@ -243,7 +246,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			Entities e = ent.get(i);
 
 
-			if (!(e instanceof Player)){
+			if (!(e instanceof Player)&&!(e instanceof Props)){
 				
 				player.Interact(e, stickers); // please check to see what stickers is because i haven't a clue
 				if (e.isInteraction()){
@@ -513,7 +516,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		if (!dialogue.isaChoosing()){
 			if (key == 68 || key == 37){ // D
 				player.setDx(0);
-				player.setX(player.getX()-16);
+				player.setX(player.getX());
 				player.setW(59);
 				player.setSprite(player.getIdleR());
 				

@@ -9,6 +9,7 @@ public class Backgrounds {
     String pic, fpic;
     boolean isMovingW, isMovingH, collmoveW;
     ArrayList<Barriers> barriers;
+    ArrayList<Props> props;
 
 
     public Backgrounds(){
@@ -26,6 +27,7 @@ public class Backgrounds {
         isMovingW = true;
         isMovingH = true;
         barriers = new ArrayList<Barriers>();
+        props = new ArrayList<Props>();
     }
 
 
@@ -43,6 +45,17 @@ public class Backgrounds {
     }
 
     // methods
+
+    public void addtoMain(ArrayList<Entities> entities){
+       while (props.size()>0){
+        for (int i = 0; i < props.size(); i++) {
+            entities.add(props.get(i));
+            props.remove(props.get(i));
+        }
+       }
+        
+    }
+
 
     public void drawBG(Graphics g2d, Player p){
         g2d.drawImage(new ImageIcon(pic).getImage(), x, y, w*2, h*2, null);
@@ -228,6 +241,12 @@ public class Backgrounds {
     }
     public void setCollmoveW(boolean collmoveW) {
         this.collmoveW = collmoveW;
+    }
+    public ArrayList<Props> getProps() {
+        return props;
+    }
+    public void setProps(ArrayList<Props> props) {
+        this.props = props;
     }
 
    
