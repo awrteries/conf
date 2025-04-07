@@ -24,6 +24,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private Dialogue dialogue, openingDialogue, die;
 	private boolean raction;
 	private Apartment1 APT1;
+	private OUTAPT1 OAPT1;
 	private Backgrounds BG;
 
 
@@ -57,7 +58,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		inter = setInter();
 		raction = false;
 		invsel = 0;
-		APT1 = new Apartment1();	
+		APT1 = new Apartment1();
+		OAPT1 = new OUTAPT1();	
 		
 		
 		
@@ -87,9 +89,10 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	public ArrayList<Entities> setTest(){
 		ArrayList<Entities> temp = new ArrayList<Entities>();
 		temp.add(player);
+		
 
-		temp.add(peng);
-				temp.add(val);
+		// temp.add(peng);
+		// 		temp.add(val);
 
 
 		return temp;
@@ -171,18 +174,26 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private void drawScreens(Graphics g2d){
 
 		
-		// if (screen.equals("opening")){
-			
-		// }
-		switch (screen){
-
-			case "opening":
+		if (screen.equals("opening")){
 			opening();
-			break;
-			case "test":
-				entities = test;
-			break;
+		} else if (screen.equals("test")){
+			// player.setX(270*2);
+			// player.setY(270*2);
+
+			entities = test;
+				BG = OAPT1;
 		}
+		// switch (screen){
+
+		// 	case "opening":
+		// 	opening();
+		// 	break;
+		// 	case "test":
+		// 		entities = test;
+		// 		BG = OAPT1;
+		// 		System.out.println(BG);
+		// 	break;
+		// }
 	}
 
 	public void opening(){

@@ -21,7 +21,7 @@ public class Items extends Entities{
         selected = sel;
         ground = gr;
         dialogue = new Dialogue("please work", "assets/dialogue/notav");
-        active = true;
+        active = false;
     }
 
     
