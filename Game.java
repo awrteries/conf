@@ -27,7 +27,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private OUTAPT1 OAPT1;
 	private Backgrounds BG;
 
-
+	
 
 	
 	public Game() {
@@ -73,6 +73,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 	// setting arraylists
 
+
+	// you can probably set the characters and stuff in backgrounds
+
 	
 	public ArrayList<Entities> setOpening(){
 		ArrayList<Entities> temp = new ArrayList<Entities>();
@@ -82,7 +85,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		temp.add(new sBox(800, 700));
 		temp.add(new sBox(400,600));
 		temp.add(new Journals(850, 180)); 
-		temp.add(new Lighter(455*2, 340*2));
+		temp.add(new Lighter(475*2, 340*2));
 
 		return temp;
 	}

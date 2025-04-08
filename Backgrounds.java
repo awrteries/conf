@@ -10,7 +10,7 @@ public class Backgrounds {
     boolean isMovingW, isMovingH, collmoveW;
     ArrayList<Barriers> barriers;
     ArrayList<Props> props;
-
+    Doors door;
 
     public Backgrounds(){
 
@@ -28,6 +28,7 @@ public class Backgrounds {
         isMovingH = true;
         barriers = new ArrayList<Barriers>();
         props = new ArrayList<Props>();
+        door = new Doors();
     }
 
 
@@ -72,6 +73,7 @@ public class Backgrounds {
 
     public void drawFW(Graphics g2d){
         g2d.drawImage(new ImageIcon(fpic).getImage(), x, y, w*2, h*2, null);
+        door.drawEntity(g2d);
 
     }
 
@@ -94,6 +96,8 @@ public class Backgrounds {
             } 
             }
 
+            door.setY(door.getY()+dy);
+
             
            
             y += dy;
@@ -112,6 +116,8 @@ public class Backgrounds {
                  barriers.get(i).setX(barriers.get(i).getX()+dx);
              } 
              }
+
+             door.setX(door.getX()+dx);
 
             x += dx;
             setMovingW(true);
@@ -248,7 +254,14 @@ public class Backgrounds {
     public void setProps(ArrayList<Props> props) {
         this.props = props;
     }
+    public Doors getDoor() {
+        return door;
+    }
+    public void setDoor(Doors door) {
+        this.door = door;
+    }
 
+    
    
 
     
