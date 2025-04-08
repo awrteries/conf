@@ -17,7 +17,6 @@ public class Barriers extends Backgrounds{
 
         // i dont even know.
 
-       int pTop = p.getY();
        int pBottom = p.getY()+p.getH()*2;
        int pLeft = p.getX();
        int pRight = p.getX()+p.getW()*2;

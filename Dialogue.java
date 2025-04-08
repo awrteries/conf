@@ -50,7 +50,7 @@ public class Dialogue {
     public void changeInter (ArrayList<Interface> inter){ // adds boxes when there's answer choices
         
         int iy = hi - 270;
-        if (aCList.size()>0){
+        if (!aCList.isEmpty()){
             for (int j = 0; j < aCList.size() ; j++) {
                 
                 inter.add(new Interface("assets/boxes/silverdAC.png",407+350*2, iy, 108, 32 ));

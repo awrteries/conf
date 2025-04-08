@@ -82,7 +82,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		temp.add(new sBox(800, 700));
 		temp.add(new sBox(400,600));
 		temp.add(new Journals(850, 180)); 
-		temp.add(new Lighter(480*2, 350*2));
+		temp.add(new Lighter(455*2, 340*2));
 
 		return temp;
 	}
@@ -175,26 +175,26 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 	private void drawScreens(Graphics g2d){
 
 		
-		if (screen.equals("opening")){
-			opening();
-		} else if (screen.equals("test")){
-			// player.setX(270*2);
-			// player.setY(270*2);
-
-			entities = test;
-				BG = OAPT1;
-		}
-		// switch (screen){
-
-		// 	case "opening":
+		// if (screen.equals("opening")){
 		// 	opening();
-		// 	break;
-		// 	case "test":
-		// 		entities = test;
+		// } else if (screen.equals("test")){
+		// 	// player.setX(270*2);
+		// 	// player.setY(270*2);
+
+		// 	entities = test;
 		// 		BG = OAPT1;
-		// 		System.out.println(BG);
-		// 	break;
 		// }
+		switch (screen){
+
+			case "opening":
+			opening();
+			break;
+			case "test":
+				entities = test;
+				BG = OAPT1;
+				System.out.println(BG);
+			break;
+		}
 	}
 
 	public void opening(){

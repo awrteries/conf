@@ -47,7 +47,7 @@ public class Backgrounds {
     // methods
 
     public void addtoMain(ArrayList<Entities> entities){
-       while (props.size()>0){
+       while (!props.isEmpty()){
         for (int i = 0; i < props.size(); i++) {
             entities.add(props.get(i));
             props.remove(props.get(i));
