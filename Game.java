@@ -260,8 +260,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		for (int i = 0; i < ent.size(); i++) {
 			Entities e = ent.get(i);
 
-
-			if (!(e instanceof Player)&&!(e instanceof Props)){
+			if (!(e instanceof Player)&&!(e instanceof Props)||(e instanceof Doors)){
 				
 				player.Interact(e, stickers); // please check to see what stickers is because i haven't a clue
 				if (e.isInteraction()){
