@@ -85,7 +85,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		temp.add(new sBox(800, 700));
 		temp.add(new sBox(400,600));
 		temp.add(new Journals(850, 180)); 
-		temp.add(new Lighter(475*2, 340*2));
+		temp.add(new Lighter(455*2, 370*2));
 
 		return temp;
 	}
@@ -95,7 +95,7 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		temp.add(player);
 		
 
-		// temp.add(peng);
+		temp.add(peng);
 		// 		temp.add(val);
 
 
@@ -155,6 +155,8 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 
 		drawScreens(g2d);
 		template(g2d);
+		System.out.println(player.getDx());
+
 		
 		twoDgraph.drawImage(back, null, 0, 0);
 
@@ -195,7 +197,6 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 			case "test":
 				entities = test;
 				BG = OAPT1;
-				System.out.println(BG);
 			break;
 		}
 	}
@@ -364,7 +365,9 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 							// System.out.println("WHYYY");
 							temp = true;
 						}
-					} else{
+					} else if ((entities.get(i)instanceof Props)) {
+						temp = false;
+					}else {
 						temp = true;
 					}
 					return temp;
@@ -479,9 +482,13 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 						} else if (en instanceof Items){
 							dialogue = ((Items)en).getDialogue();
 							dialogue.setDialogue();
+						} 
+
+						if (!(en instanceof Props)){
+							dialogue.setDialogueList();
+							dialogue.setcW();
 						}
-						dialogue.setDialogueList();
-						dialogue.setcW();
+						
 						// player.eyeContact((Npcs)en);
 					}
 				}
@@ -565,10 +572,20 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 		if (key ==69){ // E
 			for (int i = 0; i < entities.size(); i++) {
 				Entities en = entities.get(i);
+				
+				if (player.inProximity(en)){
 
-				if(en instanceof Items){
-					((Items) en).inv(player.getInventory(), entities);
+					if(en instanceof Items){
+						((Items) en).inv(player.getInventory(), entities);
+					} else if (en instanceof Doors){
+						screen = ((Doors)en).getBg();
+						player.setX(wi/2 - player.getW());
+						player.setY(hi/2 - player.getH());
+						
+					}
 				}
+
+				
 			}
 		
 		}

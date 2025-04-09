@@ -110,6 +110,7 @@ public class Dialogue {
                     setDialogueList();
         
                 } else {
+                    
 
                     if (entities.get(i) instanceof Player || entities.get(i) instanceof Npcs) {
                    
@@ -130,8 +131,6 @@ public class Dialogue {
         
                        
                 } else {
-                    System.out.println("thishihsihstihsis");
-
                     baseCheck(entities, inter, ba, player, i);
                 }
             }
