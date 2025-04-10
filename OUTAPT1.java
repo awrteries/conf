@@ -1,7 +1,7 @@
 public class OUTAPT1 extends Backgrounds{
 
     public OUTAPT1(){
-       super("assets/backgrounds/outapt1.png", "assets/backgrounds/1staptfrontwalls.png", -30,-30,800,550,0,0);
+       super("assets/backgrounds/outapt1.png", "assets/backgrounds/1staptfrontwalls.png", 0,0,800,550,0,0);
       
     barriers.add(new Barriers("assets/backgrounds/barriers/1staptB1.png", x, y, 161, 297, 0, 0));
     barriers.add(new Barriers("assets/backgrounds/barriers/1staptB2.png", x, y, 443, 199, 0, 0));

@@ -578,10 +578,11 @@ public class Game  extends JPanel implements Runnable, KeyListener, MouseListene
 					if(en instanceof Items){
 						((Items) en).inv(player.getInventory(), entities);
 					} else if (en instanceof Doors){
-						screen = ((Doors)en).getBg();
-						player.setX(wi/2 - player.getW());
-						player.setY(hi/2 - player.getH());
-						
+						Doors door = (Doors)en;
+						screen = (door.getBg());
+						// player.setX(door.getX()+player.getW());
+						// player.setY(door.getY()+door.getH()*2+20);
+						// implement this later						
 					}
 				}
 

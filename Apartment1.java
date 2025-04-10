@@ -1,8 +1,8 @@
 public class Apartment1 extends Backgrounds{
 
     public Apartment1(){
-        super("assets/backgrounds/1stapt.gif", "assets/backgrounds/1staptfrontwalls.png", -30,-30,800,550,0,0);
-        props.add(new Doors("assets/backgrounds/1staptdoor.png", "test", x+240*2, y+185*2, dx, dy, 75, 89, false));
+        super("assets/backgrounds/1stapt.gif", "assets/backgrounds/1staptfrontwalls.png", 0,0,800,550,0,0);
+        props.add(new Doors("assets/backgrounds/doors/1staptdoor.png", "test", x+240*2, y+185*2, dx, dy, 75, 89, false));
       
         barriers.add(new Barriers("assets/backgrounds/barriers/1staptB1.png", x, y, 385, 266, 0, 0));
         barriers.add(new Barriers("assets/backgrounds/barriers/1staptB2.png", x, y, 152, 550, 0, 0));
@@ -13,6 +13,8 @@ public class Apartment1 extends Backgrounds{
 
         props.add(new Props("assets/backgrounds/props/apt1stove.gif", x+547*2, y+94*2, 0, 0, 103, 36, false));
         props.add(new Props("assets/backgrounds/props/apt1table.png", x+467*2, y+345*2, 0, 0, 147, 10, false));
+
+        // setting items needs to be done here i think idk
     }
 
 }
